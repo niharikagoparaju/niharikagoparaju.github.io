@@ -9,7 +9,9 @@ Live at **https://niharikagoparaju.github.io/**
 | Page | Source |
 | --- | --- |
 | About (home) | `src/pages/index.astro`, bio text in `src/data/about.md` |
-| AI literacy | `src/pages/ai-literacy.astro`, content list in `src/data/ai-literacy.ts` |
+| AI literacy | `src/pages/ai-literacy/index.astro`, content in `src/data/ai-literacy.ts` |
+| DATA-MD lecture series | `src/pages/ai-literacy/data-md.astro`, sessions in `src/data/ai-literacy.ts`, PDFs in `public/presentations/data-md/` |
+| Review game guide | `src/pages/ai-literacy/review-game.astro`, prompt in `src/data/review-game-prompt.txt`, game in `public/games/multiverse-showdown-ortho.html` |
 
 Name, roles, contact links, photo, footer, and the nav menu live in `src/data/site.ts`.
 

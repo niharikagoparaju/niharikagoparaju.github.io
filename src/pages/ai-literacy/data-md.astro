@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { dataMd } from '../../data/ai-literacy';
+import { withBase } from '../../lib/url';
+
+const lede = `${dataMd.fullName}: a four-session introduction to artificial intelligence for medical trainees.`;
+---
+<Base title={dataMd.title} description={lede}>
+  <PageHead title={dataMd.title} lede={lede} parent={{ title: 'AI literacy', href: '/ai-literacy/' }} />
+
+  <div class="prose">
+    <p>
+      The series takes learners from how AI works, through where it fails, to how to judge AI
+      research and tools in clinical practice. The goal is for trainees to become effective, ethical
+      stewards of clinical AI for their patients and peers. Each session's slides are below as PDFs.
+    </p>
+  </div>
+
+  <section class="section" aria-labelledby="sessions">
+    <h2 id="sessions">Sessions</h2>
+    <ol class="sessions">
+      {dataMd.sessions.map((s, i) => (
+        <li class="session">
+          <p class="session__number">Session {i + 1}</p>
+          <h3 class="session__title">{s.title}</h3>
+          <p class="session__desc">{s.description}</p>
+          <ul class="session__topics" aria-label="Topics">
+            {s.topics.map((t) => <li>{t}</li>)}
+          </ul>
+          <ul class="actions">
+            <li><a class="action action--primary" href={withBase(s.pdf)} target="_blank" rel="noopener">View slides</a></li>
+            <li><a class="action" href={withBase(s.pdf)} download>Download PDF</a></li>
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="authors">
+    <h2 id="authors">Curriculum authors</h2>
+    <p class="authors">{dataMd.authors.join(', ')}</p>
+  </section>
+</Base>

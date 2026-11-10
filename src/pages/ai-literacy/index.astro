@@ -1,8 +1,8 @@
 ---
-import Base from '../layouts/Base.astro';
-import PageHead from '../components/PageHead.astro';
-import { presentations, resources } from '../data/ai-literacy';
-import { withBase, absoluteUrl } from '../lib/url';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { projects, presentations, resources } from '../../data/ai-literacy';
+import { withBase, absoluteUrl } from '../../lib/url';
 
 const title = 'AI literacy';
 const lede = 'Presentations and resources on understanding and using AI in clinical medicine.';
@@ -21,10 +21,24 @@ const officeViewer = (file: string) =>
   <div class="prose">
     <!-- TODO: A short intro to the AI literacy work: who it's for and what it covers. -->
     <p>
-      Slides from past talks are below. Select <strong>View slides</strong> to open a deck in your
-      browser, or download the original PowerPoint to reuse it.
+      Lecture series, guides, and slides from past talks. Everything here is free to view, download,
+      and adapt for teaching.
     </p>
   </div>
+
+  {projects.length > 0 && (
+    <section class="section" aria-labelledby="projects">
+      <h2 id="projects">Projects</h2>
+      <ul class="projects">
+        {projects.map((p) => (
+          <li class="project">
+            <h3 class="project__title"><a href={withBase(p.href)}>{p.title}</a></h3>
+            <p class="project__desc">{p.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   <section class="section" aria-labelledby="presentations">
     <h2 id="presentations">Presentations</h2>

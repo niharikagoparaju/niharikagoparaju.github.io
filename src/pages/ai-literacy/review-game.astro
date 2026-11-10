@@ -1,0 +1,184 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { withBase } from '../../lib/url';
+import prompt from '../../data/review-game-prompt.txt?raw';
+import gameHtml from '../../../public/games/multiverse-showdown-ortho.html?raw';
+
+const title = 'Build a review game from your lecture';
+const lede =
+  'Turn a lecture into a Jeopardy-style game for your next conference, using an AI chatbot and one free file. No coding needed.';
+
+const gameUrl = withBase('/games/multiverse-showdown-ortho.html');
+// Show the example's real content block, so this page always matches the file.
+const contentBlock = gameHtml.match(/const GAME = (\{[\s\S]*?\n\});/)?.[1];
+if (!contentBlock) throw new Error('Could not find the GAME block in the example game file');
+---
+<Base title={title} description={lede}>
+  <PageHead title={title} lede={lede} parent={{ title: 'AI literacy', href: '/ai-literacy/' }} />
+
+  <figure class="game-embed">
+    <iframe src={gameUrl} title="Example game: Multiverse Showdown, orthopedics edition" loading="lazy"></iframe>
+    <figcaption>
+      <span>This example was made from an orthopedic board review lecture, using the prompt below.</span>
+      <ul class="actions">
+        <li><a class="action" href={gameUrl} target="_blank" rel="noopener">Open full screen</a></li>
+        <li><a class="action action--primary" href={gameUrl} download="multiverse-showdown.html">Download the game file</a></li>
+      </ul>
+    </figcaption>
+  </figure>
+
+  <section class="section" aria-labelledby="need">
+    <h2 id="need">What you need</h2>
+    <div class="prose">
+      <ul>
+        <li>
+          <strong>The game file.</strong> It's a single web page that runs in any browser, works offline,
+          and needs nothing installed.
+        </li>
+        <li><strong>Your lecture as a PDF.</strong></li>
+        <li>
+          <strong>An AI chatbot that can read PDFs</strong>, such as Claude, ChatGPT, Gemini, or Microsoft
+          Copilot. Use one your institution approves.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="steps">
+    <h2 id="steps">Steps</h2>
+    <ol class="steps">
+      <li>
+        <h3>Download the game file</h3>
+        <p>
+          Choose <a href={gameUrl} download="multiverse-showdown.html">Download the game file</a> and save
+          it somewhere easy to find. Double-click it to open it in your browser. You'll see the
+          orthopedics example, ready to play.
+        </p>
+      </li>
+
+      <li>
+        <h3>Save your lecture as a PDF</h3>
+        <p>
+          In PowerPoint, choose <strong>File → Export</strong> (or <strong>Save As</strong>) and pick PDF. In Google
+          Slides, choose <strong>File → Download → PDF</strong>.
+        </p>
+        <p>
+          Before you upload it, remove anything that shouldn't leave your institution. Never put protected
+          health information, including identifiable patient images, into a public chatbot. If you're
+          adapting someone else's lecture, ask them first and credit them in the game.
+        </p>
+      </li>
+
+      <li>
+        <h3>Ask the AI to write your clues</h3>
+        <p>Start a new chat, attach your PDF, and paste this prompt:</p>
+        <div class="code-block">
+          <div class="code-block__bar">
+            <span>Prompt</span>
+            <button type="button" class="action" data-copy="prompt-text" data-label="Copy prompt">Copy prompt</button>
+          </div>
+          <pre class="code code--wrap" id="prompt-text">{prompt.trim()}</pre>
+        </div>
+        <p>
+          The AI replies with a block of structured text (JSON) holding your categories and clues, plus a
+          list of facts it wasn't sure about.
+        </p>
+      </li>
+
+      <li>
+        <h3>Check every clue</h3>
+        <p>
+          AI tools make mistakes. They can misread a slide, add a detail the lecture never said, or write a
+          clue that only makes sense with an image. Read each clue and accepted response against your
+          lecture, and look closely at anything listed under "Facts to double-check."
+        </p>
+        <p>
+          This step matters even when the source is good. While the example game was being made, the check
+          turned up a few questions whose answer choices didn't match their own teaching slides, so those
+          facts were left out of the game.
+        </p>
+      </li>
+
+      <li>
+        <h3>Load the clues into the game</h3>
+        <p>
+          Copy the JSON block from the AI's reply. In the game, choose <strong>Customize Game</strong>, open
+          <strong>Paste clues from an AI</strong>, paste, and choose <strong>Load Clues</strong>.
+        </p>
+        <p>
+          If something is off, such as a category missing a clue or extra text around the JSON, the game
+          tells you what to fix. To reword a clue or change the title and source credit, open that section
+          and edit it directly.
+        </p>
+      </li>
+
+      <li>
+        <h3>Save and download your game</h3>
+        <p>
+          Choose <strong>Save Clues</strong>, then <strong>Download Game File</strong>. You get a new file, named
+          after your game, with your clues built in. Changes made in Customize Game last only until you close
+          the page, so always download before you leave.
+        </p>
+      </li>
+
+      <li>
+        <h3>Play and share</h3>
+        <p>
+          Open your file on the computer connected to the projector. It doesn't need an internet connection.
+          To share it, email the file or put it on a shared drive. Anyone who opens it can play, customize,
+          and download their own version.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="code">
+    <h2 id="code">If you're comfortable editing code</h2>
+    <div class="prose">
+      <p>
+        All of a game's content lives in one block near the top of the file's script, between the
+        <code>GAME CONTENT: START</code> and <code>GAME CONTENT: END</code> comments. You can open the file in
+        any text editor, replace that block with the AI's JSON, and save. Nothing else in the file needs to
+        change.
+      </p>
+    </div>
+    <details class="code-details">
+      <summary>See the example game's content block</summary>
+      <pre class="code code--scroll"><code>const GAME = {contentBlock};</code></pre>
+    </details>
+  </section>
+
+  <section class="section" aria-labelledby="credits">
+    <h2 id="credits">Credits</h2>
+    <div class="prose">
+      <p>
+        Example clues adapted from <em>Orthopedic Board Review</em>, PEM Conference, by Blake Barber, DO
+        (March 2026).
+      </p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    const label = button.dataset.label ?? button.textContent ?? 'Copy';
+    button.addEventListener('click', async () => {
+      const target = document.getElementById(button.dataset.copy ?? '');
+      if (!target) return;
+      try {
+        await navigator.clipboard.writeText(target.textContent ?? '');
+        button.textContent = 'Copied';
+      } catch {
+        // Clipboard blocked: select the text so the visitor can copy it by hand.
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        button.textContent = 'Press Ctrl+C or ⌘C to copy';
+      }
+      setTimeout(() => (button.textContent = label), 2500);
+    });
+  });
+</script>

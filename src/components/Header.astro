@@ -3,6 +3,12 @@ import { site } from '../data/site';
 import { withBase } from '../lib/url';
 
 const current = Astro.url.pathname.replace(/\/?$/, '/');
+const home = withBase('/').replace(/\/?$/, '/');
+// A nav item is current on its own page and on pages beneath it (e.g. /ai-literacy/data-md/).
+const isCurrent = (href: string) => {
+  const target = href.replace(/\/?$/, '/');
+  return target === home ? current === home : current.startsWith(target);
+};
 ---
 <header class="site-header">
   <div class="wrap site-header__inner">
@@ -13,7 +19,7 @@ const current = Astro.url.pathname.replace(/\/?$/, '/');
           const href = withBase(item.href);
           return (
             <li>
-              <a href={href} aria-current={current === href.replace(/\/?$/, '/') ? 'page' : undefined}>
+              <a href={href} aria-current={current === href.replace(/\/?$/, '/') ? 'page' : isCurrent(href) ? 'true' : undefined}>
                 {item.title}
               </a>
             </li>

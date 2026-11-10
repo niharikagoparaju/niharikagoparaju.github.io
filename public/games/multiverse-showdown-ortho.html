@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiverse Showdown</title>
+<style>
+:root{color-scheme:dark;--gold:#ffdc87;--ink:#eef4ff;--muted:#b2c2e3;--line:#304778;--cyan:#71ecff;--pink:#ff9ad0;font:16px system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;min-height:100dvh;color:var(--ink);background:radial-gradient(ellipse at 50% -10%,#203d91,transparent 58%),radial-gradient(ellipse at bottom right,#251244,transparent 55%),#070c21}
+main{max-width:1160px;margin:auto;padding:18px clamp(10px,3vw,38px) 24px}header{text-align:center;margin-bottom:15px}.eyebrow,.tag{letter-spacing:.22em;font-size:.72rem;font-weight:850;text-transform:uppercase;color:var(--gold)}.eyebrow:before,.eyebrow:after{content:"✦";margin:0 .8em}h1{font-size:clamp(1.7rem,5.2vw,3.85rem);font-weight:950;letter-spacing:-.055em;line-height:1;margin:.14em 0 .24em;text-transform:uppercase;background:linear-gradient(180deg,#fff 30%,#a6c3ff 90%);color:transparent;background-clip:text}h2,h3,p{margin:.4em 0 .8em}.muted,small{color:var(--muted)}small{display:block}
+nav,.actions,.scorebar,.team-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}nav{justify-content:center;margin-top:12px}.scorebar{display:grid;grid-template-columns:1fr 1fr;margin-bottom:14px;gap:12px}.podium{position:relative;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:13px;background:linear-gradient(135deg,#162c55,#10152e);padding:8px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}.team0{--accent:var(--cyan)}.team1{--accent:var(--pink)}.team-name{color:var(--accent);font-weight:800;overflow-wrap:anywhere}.score{font-size:clamp(1.2rem,3vw,2.1rem);font-weight:900;font-variant-numeric:tabular-nums}.delta{position:absolute;right:12px;bottom:-12px;background:#103c37;color:#b1ffdc;border-radius:20px;padding:2px 8px;z-index:3;animation:rise .65s both}.loss{background:#41273b;color:#ffd7e7}
+button,input,textarea{font:inherit}button{border:1px solid #526797;border-radius:9px;padding:.55em .85em;background:#15264c;color:var(--ink);font-weight:750;cursor:pointer}button:hover:not(:disabled){border-color:var(--gold);filter:brightness(1.15)}button:disabled{opacity:.45;cursor:default}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}.primary{background:var(--gold);color:#271903;border-color:var(--gold)}.quiet{background:#0e1936}.good{background:#12463c}.bad{background:#472840}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.category{display:grid;grid-template-rows:minmax(52px,auto) repeat(5,1fr);gap:7px;min-width:0}.category h2{margin:0;display:grid;place-items:center;text-align:center;padding:6px;color:#e3ebff;font-size:clamp(.73rem,1.8vw,1.12rem);line-height:1.15;text-transform:uppercase;letter-spacing:.08em;overflow-wrap:anywhere;border:1px solid #334a83;border-radius:8px;background:#101b3b}.tile{min-height:clamp(42px,8vh,75px);background:linear-gradient(155deg,#285bc9,#172a82);border-color:#5474db;box-shadow:inset 0 1px #ffffff36,0 3px #080e27;font-size:clamp(1.1rem,3.2vw,2.3rem);letter-spacing:-.04em;color:var(--gold);padding:0;transition:filter .15s,transform .15s}.tile:hover:not(:disabled){transform:translateY(-2px)}.tile:disabled.used{opacity:1;background:#101a32;color:#a5b3d2;border-color:#283555;font-size:clamp(.65rem,1.6vw,.82rem);box-shadow:none}
+.foot{margin-top:14px;justify-content:space-between}.card,details.rules{border:1px solid var(--line);border-radius:15px;background:#101a37;padding:clamp(12px,3vw,28px);margin:0 auto 14px;max-width:850px}.rules{padding:10px 14px!important}.rules summary{cursor:pointer;font-weight:800}.rules p{margin:.5em 0;font-size:.92rem}.stage{text-align:center;box-shadow:0 16px 60px #03091caa;background:radial-gradient(ellipse at top,#244491,#111b3c 72%);border-top:3px solid var(--gold);padding:clamp(14px,4vw,42px)}.enter{animation:enter .3s ease-out}.stage .actions{justify-content:center;margin-top:15px}.clue{font-size:clamp(1.22rem,4vw,2.55rem);line-height:1.25;font-weight:780;overflow-wrap:anywhere}.answer{border:1px solid #b29453;background:#221d29;color:#ffe2a3;border-radius:10px;padding:12px;font-size:clamp(1rem,2.8vw,1.55rem);white-space:pre-wrap;overflow-wrap:anywhere}.answer .tag{display:block;margin-bottom:5px}.judges,.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.judge{background:#0e1733;border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0}.team-actions{justify-content:center;margin-top:8px}.status{min-height:1.25em;color:var(--gold);margin:8px 0;text-align:center;font-size:.86rem}.error{color:#ffacc2}label{display:block;color:var(--muted);font-weight:680;font-size:.9rem;min-width:0}input,textarea{width:100%;border:1px solid #526797;border-radius:7px;padding:8px;background:#090f27;color:white;margin:4px 0}textarea{resize:vertical;min-height:64px}.editor details{border-top:1px solid var(--line);padding:10px 0}.editor summary{font-weight:800;cursor:pointer}.edit-row{padding:8px 0;border-bottom:1px solid #253654}.victory{border-color:#f5c461;background:radial-gradient(ellipse at 50% 0,#775022,#272043 58%,#101a37);box-shadow:0 0 52px #ffc2532c}.victory h2{font-size:clamp(2rem,6vw,4.5rem);line-height:1.04;color:var(--gold);overflow-wrap:anywhere}.result{padding:9px;border:1px solid var(--line);border-radius:8px;background:#0d1730}.victory .result{animation:enter .35s .15s both}.victory .result + .result{animation-delay:.3s}.victory .actions{animation:enter .3s .45s both}.result strong{display:block;font-size:1.6rem}.pop{animation:pop .45s ease}.source{margin-top:12px;font-size:.76rem;text-align:center;color:var(--muted)}
+@keyframes enter{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:none}}@keyframes pop{45%{transform:scale(1.14);color:var(--gold)}}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:510px){.grid,.category{gap:4px}.category h2{letter-spacing:.02em}.podium{padding:6px;flex-wrap:wrap}.judge button{font-size:.82rem}.fields{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<main>
+<header id="masthead"></header>
+<div id="app"></div>
+<div class="source" id="source"></div>
+</main>
+<script>
+/* =====================================================================
+   GAME CONTENT: START
+   This block is the only part that changes between games. You can edit it
+   here, or skip code entirely: open this file in a browser, choose
+   Customize Game, paste or edit your clues, then choose Download Game File.
+   The content must stay valid JSON (double quotes, no trailing commas).
+
+   categories: each category is ["Category name", clue, clue, ...]
+               with one clue per point value, easiest first.
+   clue:       ["Clue text", "Accepted response", source]
+               source is the lecture question or slide number, or null.
+   finale:     ["Category", "Clue text", "Accepted response", source]
+   ===================================================================== */
+const GAME = {
+  "title": "Multiverse Showdown",
+  "eyebrow": "Pediatric EM · Board Review",
+  "edition": "Orthopedics Edition",
+  "source": "Clues adapted from Orthopedic Board Review, PEM Conference · Blake Barber, DO · March 2026",
+  "values": [100, 200, 300, 400, 500],
+  "categories": [
+    ["Growth Plates",
+      ["Remember SALTER: this most common physeal fracture type runs through the physis and up into the metaphysis.", "Salter–Harris type II.", 2],
+      ["A 10-year-old has a nondisplaced Salter–Harris II fracture of the distal tibia. What is the ED management?", "Posterior short leg splint with orthopedic clinic follow-up.", 2],
+      ["Salter–Harris III, IV, and V fractures can disrupt growth even after anatomic reduction because they involve this part of the physis.", "The germinal matrix.", 7],
+      ["A Tillaux fracture is a Salter–Harris III injury of which part of the distal tibial epiphysis?", "The anterolateral distal tibial epiphysis.", 1],
+      ["Above this amount of displacement, a Tillaux fracture needs internal fixation rather than closed reduction and casting.", "More than 2 mm.", 1]],
+    ["Arm Arena",
+      ["A 2-year-old holds her arm pronated with the elbow slightly flexed after a parent tugged her hand. Name the injury.", "Radial head subluxation (nursemaid's elbow).", 3],
+      ["A 6-year-old has a nondisplaced torus fracture of the distal radius. What immobilization lets her return to activities fastest with equal healing?", "A removable functional splint, worn for 3–4 weeks.", 27],
+      ["After an anterior shoulder dislocation, you test sensation over the lateral deltoid to check this nerve.", "The axillary nerve.", 20],
+      ["Name the forearm injury: a proximal ulna fracture with dislocation of the radial head.", "Monteggia fracture.", 29],
+      ["A football player has medial clavicle pain, dysphagia, and shortness of breath, but normal X-rays. Name the suspected injury and the imaging to order.", "Posterior sternoclavicular dislocation; CT of the chest.", 18]],
+    ["The Limp Lab",
+      ["A 13-year-old high jumper has heel pain at the Achilles insertion and pain when you squeeze the calcaneus. Name the condition.", "Calcaneal apophysitis (Sever disease).", 17],
+      ["A 5-year-old has a limp weeks after a URI, no fever, a small hip effusion, and a normal CRP. What's the likely diagnosis?", "Transient synovitis.", 19],
+      ["A synovial fluid WBC count above this threshold is considered to represent septic arthritis.", "More than 50,000 cells/µL.", 6],
+      ["This hemoglobinopathy increases blood viscosity and predisposes children to avascular necrosis of the femoral head.", "Sickle cell disease.", 13],
+      ["A 5-year-old has weeks of low back pain, stiffness with forward flexion, a limp, and an ESR of 60. Which imaging study is best?", "MRI of the lumbar spine with IV contrast (suspected discitis).", 16]],
+    ["Trauma Trials",
+      ["A teen lands on both feet after a fall from height and has bilateral calcaneal fractures. Which spine injury occurs alongside about 10% of the time?", "Vertebral compression fracture.", 12],
+      ["About half of these injuries reduce before arrival, and they put the popliteal artery and common peroneal nerve at risk. Name the injury.", "Knee dislocation.", 9],
+      ["A child has an open tibia fracture from a farm injury. Which IV antibiotic combination covers skin flora, gram-negative rods, and anaerobes?", "Cefazolin, gentamicin, and ampicillin.", 4],
+      ["Give the formula for the ankle-brachial index and its normal range.", "Ankle (dorsalis pedis) systolic pressure ÷ brachial systolic pressure; normal 0.9–1.4.", 10],
+      ["The classic 5 P's of compartment syndrome have given way to these 3 A's in children.", "Anxiety, agitation, and increasing analgesic requirement.", 25]]
+  ],
+  "finale": ["Off the Slopes",
+    "A snowboarder's foot is forced into dorsiflexion and inversion, jamming the talus against the fibula. Name the fracture that mimics a bad ankle sprain and is often missed on X-ray.",
+    "Lateral talar process fracture (snowboarder's fracture), best confirmed with CT.", 15]
+};
+/* =====================================================================
+   GAME CONTENT: END. You shouldn't need to change anything below.
+   ===================================================================== */
+
+const { values, categories, finale } = GAME;
+// Kept so "Download Game File" can write out a copy of this page with new content.
+const SCRIPT_SOURCE = document.currentScript.textContent;
+const STYLE_SOURCE = document.querySelector("style").textContent;
+const app = document.querySelector("#app");
+const esc = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+function renderMasthead() {
+  document.title = GAME.edition ? `${GAME.title} · ${GAME.edition}` : GAME.title;
+  document.querySelector("#masthead").innerHTML =
+    `${GAME.eyebrow ? `<div class="eyebrow">${esc(GAME.eyebrow)}</div>` : ""}<h1>${esc(GAME.title)}</h1>${GAME.edition ? `<div class="tag">${esc(GAME.edition)}</div>` : ""}`;
+  document.querySelector("#source").textContent = GAME.source || "";
+}
+renderMasthead();
+
+// Turn pasted text (ideally the JSON an AI returned) into game content, or explain what's wrong.
+function parseGame(text) {
+  let body = text.trim().replace(/^```[a-z]*\s*/i, "").replace(/```$/, "").trim();
+  body = body.replace(/^(const|let|var)\s+GAME\s*=\s*/, "").replace(/;\s*$/, "");
+  let game;
+  try { game = JSON.parse(body); }
+  catch { throw new Error("That text isn't valid JSON. Ask the AI to return only the JSON, with no extra text, and paste it again."); }
+  const fail = msg => { throw new Error(msg); };
+  const filled = value => typeof value === "string" && value.trim() !== "";
+  if (!game || typeof game !== "object" || Array.isArray(game)) fail("The pasted content should be a single JSON object that starts with {.");
+  const points = game.values ?? [100, 200, 300, 400, 500];
+  if (!Array.isArray(points) || !points.length || !points.every(v => Number.isSafeInteger(v) && v > 0)) fail("\"values\" must be a list of positive whole numbers, like [100, 200, 300, 400, 500].");
+  if (!Array.isArray(game.categories) || game.categories.length < 1 || game.categories.length > 6) fail("Include between 1 and 6 categories.");
+  game.categories.forEach((cat, i) => {
+    if (!Array.isArray(cat) || !filled(cat[0])) fail(`Category ${i + 1} needs a name.`);
+    if (cat.length - 1 !== points.length) fail(`"${cat[0]}" needs exactly ${points.length} clues, one per point value.`);
+    cat.slice(1).forEach((c, j) => {
+      if (!Array.isArray(c) || !filled(c[0]) || !filled(c[1])) fail(`Clue ${j + 1} in "${cat[0]}" needs clue text and an accepted response.`);
+    });
+  });
+  if (!Array.isArray(game.finale) || !game.finale.slice(0, 3).every(filled) || game.finale.length < 3) fail("\"finale\" needs a category, a clue, and an accepted response.");
+  return {
+    title: filled(game.title) ? game.title.trim() : GAME.title,
+    eyebrow: typeof game.eyebrow === "string" ? game.eyebrow.trim() : "",
+    edition: typeof game.edition === "string" ? game.edition.trim() : "",
+    source: typeof game.source === "string" ? game.source.trim() : "",
+    values: points,
+    categories: game.categories.map(([name, ...clues]) => [name.trim(), ...clues.map(([q, a, src]) => [q.trim(), a.trim(), src ?? null])]),
+    finale: [game.finale[0].trim(), game.finale[1].trim(), game.finale[2].trim(), game.finale[3] ?? null]
+  };
+}
+function applyGame(next) {
+  Object.assign(GAME, { title: next.title, eyebrow: next.eyebrow, edition: next.edition, source: next.source });
+  values.splice(0, values.length, ...next.values);
+  categories.splice(0, categories.length, ...next.categories);
+  finale.splice(0, finale.length, ...next.finale);
+  renderMasthead();
+}
+// Build a standalone copy of this page with the current content, and save it.
+function downloadGame() {
+  const j = value => JSON.stringify(value).replace(/</g, "\\u003c");
+  const content = `{\n${["title", "eyebrow", "edition", "source"].map(key => `  "${key}": ${j(GAME[key] || "")},`).join("\n")}
+  "values": ${j(values)},
+  "categories": [\n${categories.map(([name, ...clues]) => `    [${j(name)},\n${clues.map(c => "      " + j(c)).join(",\n")}]`).join(",\n")}
+  ],
+  "finale": ${j(finale)}\n}`;
+  const start = SCRIPT_SOURCE.indexOf("const GAME = ");
+  const end = SCRIPT_SOURCE.indexOf("/* =", start);
+  const script = SCRIPT_SOURCE.slice(0, start) + "const GAME = " + content + ";\n" + SCRIPT_SOURCE.slice(end);
+  const html = `<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>${esc(document.title)}</title>\n<style>${STYLE_SOURCE}</style>\n<main>\n<header id="masthead"></header>\n<div id="app"></div>\n<div class="source" id="source"></div>\n</main>\n<script>${script}<\/script>\n</html>\n`;
+  const slug = [GAME.title, GAME.edition].filter(Boolean).join(" ").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "review-game";
+  const link = Object.assign(document.createElement("a"), {
+    href: URL.createObjectURL(new Blob([html], { type: "text/html" })),
+    download: slug + ".html"
+  });
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  return slug + ".html";
+}
+const format = value => value.toLocaleString("en-US");
+const signed = value => (value > 0 ? "+" : value < 0 ? "−" : "") + format(Math.abs(value));
+const scoreText = value => value < 0 ? "−" + format(-value) : format(value);
+const button = (action, label, css = "", disabled = false) =>
+  `<button type="button" data-action="${action}" class="${css}" ${disabled ? "disabled" : ""}>${label}</button>`;
+let view, scores, used, active, tried, shown, resolved, last, finalStep, wagers, rulings, message, effect;
+let names = ["Team One", "Team Two"];
+
+function reset() {
+  view = "setup";
+  scores = [0, 0];
+  used = new Set();
+  active = null;
+  tried = [false, false];
+  shown = false;
+  resolved = false;
+  last = null;
+  finalStep = 0;
+  wagers = [null, null];
+  rulings = [null, null];
+  message = "";
+  effect = null;
+}
+reset();
+
+function scoreboard() {
+  return `<section class="scorebar" aria-label="Scores">${names.map((name, i) =>
+    `<div class="podium team${i}"><span class="team-name">${esc(name)}</span>
+      <span class="score" id="score${i}">${scoreText(scores[i])}</span>
+      ${effect?.team === i ? `<span class="delta ${effect.delta < 0 ? "loss" : ""}">${signed(effect.delta)}</span>` : ""}</div>`).join("")}</section>`;
+}
+function rules(open = false) {
+  return `<details class="rules" ${open ? "open" : ""}><summary>How to Play</summary>
+    <p>Pick a tile and answer aloud. A correct response earns the tile value. An incorrect response costs that value and gives the other team one chance to steal. The host can pass to close a clue. In Final Jeopardy, wager privately before seeing the clue. Highest final score wins.</p></details>`;
+}
+function board() {
+  const total = categories.length * values.length;
+  // Categories share the board's rows (subgrid), so a long category name can't knock tiles out of line.
+  const rows = `minmax(52px,auto) repeat(${values.length},1fr)`;
+  return `<div class="grid" style="grid-template-columns:repeat(${categories.length},minmax(0,1fr));grid-template-rows:${rows}">${categories.map(([category, ...clues], col) =>
+    `<section class="category" style="grid-row:span ${values.length + 1};grid-template-rows:${rows};grid-template-rows:subgrid"><h2>${esc(category)}</h2>${clues.map((_, row) => {
+      const id = col * values.length + row;
+      return `<button type="button" class="tile ${used.has(id) ? "used" : ""}" data-action="tile:${id}" aria-label="${esc(category)}, ${values[row]} points${used.has(id) ? ", played" : ""}" ${used.has(id) || view === "setup" ? "disabled" : ""}>${used.has(id) ? "PLAYED" : values[row]}</button>`;
+    }).join("")}</section>`).join("")}</div>
+    ${view === "board" ? `<div class="actions foot"><span class="muted">${used.size} / ${total} played</span>
+      <div class="actions">${button("undo","Undo last score","quiet",!last)}${button("final", used.size === total ? "Final Jeopardy" : "Start Final Early","primary")}</div></div>` : ""}`;
+}
+function setup() {
+  return rules(true) + `<section class="card"><div class="fields">
+    ${names.map((name,i) => `<label>Team ${i+1} name<input data-name="${i}" maxlength="32" value="${esc(name)}"></label>`).join("")}</div>
+    <div class="actions">${button("start","Start Game","primary")}${button("edit","Customize Game","quiet")}${button("download","Download Game File","quiet")}</div></section>` + board();
+}
+function editor() {
+  const field = (key, label, value, multiline = false) =>
+    `<label>${label}${multiline ? `<textarea required data-edit="${key}">${esc(value)}</textarea>` : `<input required data-edit="${key}" value="${esc(value)}">`}</label>`;
+  return `<form class="card editor" id="editor" novalidate><h2>Customize Game</h2><p class="muted">Paste clues from an AI, or open a section to edit it by hand. When you're done, save, then choose Download Game File to keep your version.</p>
+    <details ${categories.length ? "" : "open"}><summary>Paste clues from an AI</summary>
+      <label>AI response (JSON)<textarea id="import-text" rows="8" spellcheck="false" placeholder='{ "title": "…", "categories": [ … ], "finale": [ … ] }'></textarea></label>
+      <p class="error" id="import-error" role="alert"></p>${button("import","Load Clues","primary")}</details>
+    <details><summary>Game details</summary>${field("meta:title","Game title",GAME.title)}
+      <label>Line above the title<input data-edit="meta:eyebrow" value="${esc(GAME.eyebrow || "")}"></label>
+      <label>Line below the title<input data-edit="meta:edition" value="${esc(GAME.edition || "")}"></label>
+      <label>Source credit<textarea data-edit="meta:source">${esc(GAME.source || "")}</textarea></label></details>
+    ${categories.map(([title,...clues], col) => `<details><summary>${esc(title)}</summary>${field("title:"+col,"Category title",title)}
+    ${clues.map(([q,a],row) => `<div class="edit-row"><div class="tag">${values[row]} points</div><div class="fields">${field(`q:${col}:${row}`,"Clue",q,true)}${field(`a:${col}:${row}`,"Accepted response",a,true)}</div></div>`).join("")}</details>`).join("")}
+    <details><summary>Final Jeopardy</summary>${field("final:0","Category",finale[0])}${field("final:1","Clue",finale[1],true)}${field("final:2","Accepted response",finale[2],true)}</details>
+    <p class="error" id="edit-error" role="alert"></p><div class="actions">${button("save","Save Clues","primary")}${button("cancel","Cancel","quiet")}</div></form>`;
+}
+function answer(text, source) {
+  return `<div class="answer enter"><span class="tag">Accepted response</span>${esc(text)}</div>${source ? `<small>Lecture question ${esc(source)}</small>` : ""}`;
+}
+function judges(isFinal = false) {
+  return `<div class="judges">${names.map((name,i) => {
+    const locked = isFinal ? rulings[i] !== null : tried[i];
+    return `<div class="judge team${i}"><span class="team-name">${esc(name)}</span><div class="team-actions">
+      ${locked ? `<small>${isFinal ? (rulings[i] ? "Correct" : "Incorrect") : "Attempt used"}</small>` :
+      button((isFinal ? "judge" : "score") + ":" + i + ":1","Correct","good") + button((isFinal ? "judge" : "score") + ":" + i + ":0","Incorrect","bad")}</div></div>`;
+  }).join("")}</div>`;
+}
+function clue() {
+  const col = Math.floor(active / values.length);
+  const row = active % values.length;
+  const [q,a,source] = categories[col][row+1];
+  return `<section class="card stage ${!shown && !tried.some(Boolean) ? "enter" : ""}">
+    <div class="tag">${esc(categories[col][0])} · ${values[row]} points</div>
+    <h2 class="clue" tabindex="-1">${esc(q)}</h2>
+    ${shown ? answer(a,source) : button("reveal","Reveal Answer","quiet")}
+    ${resolved ? "" : judges()}<div class="actions">${resolved ? button("continue","Back to Board","primary") : button("pass","Pass &amp; Reveal","quiet")}${button("undo","Undo last score","quiet",!last)}</div></section>`;
+}
+function final() {
+  const [category,q,a,source] = finale;
+  if (finalStep === 0) return `<section class="card stage enter"><div class="tag">Final Jeopardy · Wagers</div>
+    <h2 class="clue" tabindex="-1">${esc(category)}</h2><p class="muted">Teams tell the host their wagers privately. Wagers stay masked until the results.</p>
+    <form id="wager-form"><div class="fields">${names.map((name,i) => `<label>${esc(name)} · 0 to ${format(Math.max(0,scores[i]))}
+      <input type="password" inputmode="numeric" id="wager${i}" aria-label="${esc(name)} wager" autocomplete="off" ${scores[i] <= 0 ? 'value="0" readonly' : ""}></label>`).join("")}</div>
+      <p class="error" role="alert" id="wager-error"></p><div class="actions"><button class="primary">Lock Wagers &amp; Reveal Clue</button>${button("back","Back to Board","quiet")}</div></form></section>`;
+  if (finalStep < 3) return `<section class="card stage enter"><div class="tag">Final Jeopardy · ${esc(category)}</div>
+    <h2 class="clue" tabindex="-1">${esc(q)}</h2>${finalStep === 1 ? `<p class="muted">Teams write their responses privately.</p>${button("final-reveal","Reveal Answer","primary")}` :
+    answer(a,source) + judges(true) + `<div class="actions">${button("settle","Reveal Final Scores","primary",rulings.includes(null))}${button("clear-rulings","Clear rulings","quiet",rulings.every(x => x === null))}</div>`}</section>`;
+  const tie = scores[0] === scores[1];
+  const winner = scores[0] > scores[1] ? 0 : 1;
+  return `<section class="card stage victory enter"><div class="tag">✦ Final Results ✦</div>
+    <h2 tabindex="-1">${tie ? "It’s a tie!" : esc(names[winner]) + " wins!"}</h2>
+    <div class="fields">${names.map((name,i) => `<div class="result team${i}"><span class="team-name">${esc(name)}</span>
+      <strong>${scoreText(scores[i])}</strong><small>Wager ${format(wagers[i])} · ${rulings[i] ? "Correct" : "Incorrect"} · ${signed(rulings[i] ? wagers[i] : -wagers[i])}</small></div>`).join("")}</div>
+    <div class="actions">${button("again","Play Again","primary")}</div></section>`;
+}
+function render(focus = "", animateFinal = false) {
+  app.innerHTML = (view === "setup" || view === "edit" ? "" : scoreboard()) +
+    (view === "setup" ? setup() : view === "edit" ? editor() : view === "board" ? rules() + board() : view === "clue" ? clue() : final()) +
+    `<div class="status" role="status">${esc(message)}</div>`;
+  if (focus) {
+    const target = focus.split(", ").map(selector => app.querySelector(selector)).find(Boolean);
+    target?.focus();
+  }
+  if (effect) animateScore(effect.team, scores[effect.team] - effect.delta, scores[effect.team]);
+  if (animateFinal) scores.forEach((score,i) => animateScore(i, score - (rulings[i] ? wagers[i] : -wagers[i]), score));
+}
+function animateScore(team, from, to) {
+  const el = document.querySelector("#score"+team);
+  if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches || from === to) return;
+  el.classList.add("pop");
+  el.textContent = scoreText(from);
+  const start = performance.now();
+  function frame(now) {
+    if (!el.isConnected) return;
+    const progress = Math.min(1,(now-start)/370);
+    el.textContent = scoreText(Math.round(from+(to-from)*progress));
+    if (progress < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+function rememberNames() {
+  app.querySelectorAll("[data-name]").forEach((field,i) => {
+    names[i] = field.value.trim() || (i ? "Team Two" : "Team One");
+  });
+}
+function saveEdits() {
+  const fields = [...app.querySelectorAll("[data-edit]")];
+  const blank = fields.find(field => field.required && !field.value.trim());
+  if (blank) {
+    blank.closest("details").open = true;
+    document.querySelector("#edit-error").textContent = "Fill in each category, clue, and accepted response before saving.";
+    blank.focus();
+    return;
+  }
+  for (const field of fields) {
+    const [kind,col,row] = field.dataset.edit.split(":");
+    const value = field.value.trim();
+    if (kind === "meta") GAME[col] = value;
+    else if (kind === "title") categories[col][0] = value;
+    else if (kind === "final") {
+      if (col !== "0" && finale[col] !== value) finale[3] = null;
+      finale[col] = value;
+    } else {
+      const clue = categories[col][Number(row)+1];
+      const fieldIndex = kind === "q" ? 0 : 1;
+      if (clue[fieldIndex] !== value) clue[2] = null;
+      clue[fieldIndex] = value;
+    }
+  }
+  renderMasthead();
+  view = "setup";
+  message = "Clues saved. Choose Download Game File to keep this version.";
+  render('[data-action="download"]');
+}
+function closeClue() {
+  used.add(active);
+  active = null;
+  view = "board";
+}
+function score(team, correct) {
+  if (view !== "clue" || resolved || tried[team]) return;
+  last = {active, tried:[...tried], shown, scores:[...scores]};
+  const delta = values[active % values.length] * (correct ? 1 : -1);
+  scores[team] += delta;
+  effect = {team,delta};
+  tried[team] = true;
+  message = names[team] + " " + signed(delta) + (correct || tried.every(Boolean) ? " · Clue closed" : " · Other team can steal");
+  resolved = correct || tried.every(Boolean);
+  if (resolved) shown = true;
+  render(resolved ? '[data-action="continue"]' : '[data-action="score:'+(1-team)+':1"]');
+}
+app.addEventListener("click", event => {
+  const control = event.target.closest("button[data-action]");
+  if (!control || control.disabled) return;
+  const [action,id,ruling] = control.dataset.action.split(":");
+  effect = null;
+  message = "";
+  switch(action) {
+    case "start": rememberNames(); view = "board"; break;
+    case "edit": rememberNames(); view = "edit"; break;
+    case "cancel": view = "setup"; break;
+    case "save": saveEdits(); return;
+    case "download": message = "Downloaded " + downloadGame() + ". Open it in any browser to play."; break;
+    case "import": {
+      const text = app.querySelector("#import-text").value;
+      try {
+        applyGame(parseGame(text));
+      } catch (error) {
+        app.querySelector("#import-error").textContent = error.message;
+        app.querySelector("#import-text").focus();
+        return;
+      }
+      reset();
+      view = "edit";
+      message = `Loaded ${categories.length} categories. Check the clues below, then choose Save Clues.`;
+      render('[data-action="save"]');
+      return;
+    }
+    case "tile":
+      active = Number(id); view = "clue"; tried = [false,false]; shown = false; resolved = false;
+      render(".clue"); return;
+    case "score": score(Number(id), ruling === "1"); return;
+    case "reveal": shown = true; render('.judge button:not(:disabled), [data-action="pass"]'); return;
+    case "pass": resolved = true; shown = true; message = "Clue passed."; render('[data-action="continue"]'); return;
+    case "continue": {
+      const played = active;
+      closeClue();
+      render('[data-action="tile:'+(played+1)+'"]:not(:disabled), .tile:not(:disabled), [data-action="final"]'); return;
+    }
+    case "undo":
+      if (!last) return;
+      ({active,tried,shown,scores} = last);
+      used.delete(active); resolved = false;
+      last = null; view = "clue"; message = "Last score undone. Clue reopened.";
+      render(".clue"); return;
+    case "final": view = "final"; render(".clue"); return;
+    case "back": view = "board"; break;
+    case "final-reveal": finalStep = 2; break;
+    case "judge": rulings[Number(id)] = ruling === "1"; break;
+    case "clear-rulings": rulings = [null,null]; break;
+    case "settle":
+      if (finalStep !== 2 || rulings.includes(null)) return;
+      scores = scores.map((value,i) => value + (rulings[i] ? wagers[i] : -wagers[i]));
+      finalStep = 3;
+      render(".victory h2", true); return;
+    case "again": reset(); break;
+  }
+  render(view === "board" ? '.tile:not(:disabled), [data-action="final"]' : view === "final" ? ".clue" : "");
+});
+app.addEventListener("submit", event => {
+  event.preventDefault();
+  if (event.target.id === "editor") { saveEdits(); return; }
+  if (event.target.id !== "wager-form" || finalStep !== 0) return;
+  const entries = names.map((_,i) => document.querySelector("#wager"+i));
+  const invalid = entries.findIndex((entry,i) => !/^\d+$/.test(entry.value) ||
+    !Number.isSafeInteger(Number(entry.value)) || Number(entry.value) > Math.max(0,scores[i]));
+  if (invalid >= 0) {
+    document.querySelector("#wager-error").textContent = "Enter a whole-number wager within the displayed range for each team.";
+    entries[invalid].focus();
+    return;
+  }
+  wagers = entries.map(entry => Number(entry.value));
+  finalStep = 1;
+  render(".clue");
+});
+render();
+</script>
+</html>

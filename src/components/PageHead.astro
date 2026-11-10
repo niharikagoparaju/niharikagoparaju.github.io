@@ -1,13 +1,17 @@
 ---
 import Band from './Band.astro';
+import { withBase } from '../lib/url';
 
 interface Props {
   title: string;
   lede?: string;
+  /** Link back to a parent page, e.g. { title: 'AI literacy', href: '/ai-literacy/' }. */
+  parent?: { title: string; href: string };
 }
-const { title, lede } = Astro.props;
+const { title, lede, parent } = Astro.props;
 ---
 <header class="page-head">
+  {parent && <p class="page-head__parent"><a href={withBase(parent.href)}>{parent.title}</a></p>}
   <h1>{title}</h1>
   <Band />
   {lede && <p class="lede">{lede}</p>}

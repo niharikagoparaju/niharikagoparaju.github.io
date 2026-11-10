@@ -10,6 +10,7 @@
   --accent: #1f5fa8;
   --accent-hover: #164a85;
   --focus: #1f5fa8;
+  --code-bg: #eceff4;
 
   /* Zones of a length-based pediatric resuscitation tape */
   --zone-grey: #a3a9b2;
@@ -38,6 +39,7 @@
     --accent: #8ab8f0;
     --accent-hover: #b3d1f6;
     --focus: #8ab8f0;
+    --code-bg: #182133;
   }
 }
 
@@ -145,7 +147,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding-block: 0.25rem;
 }
 .nav a:hover { color: var(--ink); }
-.nav a[aria-current="page"] {
+.nav a[aria-current] {
   color: var(--ink);
   box-shadow: inset 0 -2px 0 var(--ink);
 }
@@ -409,3 +411,186 @@ img { max-width: 100%; height: auto; display: block; }
   color: var(--muted);
   font-style: italic;
 }
+
+/* ==========================================================================
+   Sub-pages: parent link, project list, lecture series
+   ========================================================================== */
+
+.page-head__parent {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.page-head__parent a { color: var(--muted); }
+.page-head__parent a:hover { color: var(--ink); }
+
+.projects,
+.sessions {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.project,
+.session {
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+.project:last-child,
+.session:last-child { border-bottom: 1px solid var(--rule); }
+
+.project__title { font-size: 1.3125rem; }
+.project__title a { color: var(--ink); text-decoration-color: var(--rule); }
+.project__title a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
+.project__desc { margin: 0.4rem 0 0; }
+
+.session__number {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.session__title { margin-top: 0.3rem; font-size: 1.3125rem; }
+.session__desc { margin: 0.5rem 0 0; }
+.session__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+.session__topics li:not(:last-child)::after { content: ","; }
+
+.authors { color: var(--muted); }
+
+/* ==========================================================================
+   Review game guide
+   ========================================================================== */
+
+/* The game needs more room than the reading column, so it breaks out wider. */
+.game-embed {
+  position: relative;
+  left: 50%;
+  width: min(68rem, 100vw - 48px);
+  transform: translateX(-50%);
+  margin: 0.5rem 0 0;
+}
+.game-embed iframe {
+  display: block;
+  width: 100%;
+  height: clamp(560px, 82vh, 880px);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: #070c21;
+}
+.game-embed figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  max-width: var(--measure);
+  margin: 1rem auto 0;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+.game-embed figcaption .actions { margin: 0; }
+
+.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin-bottom: 0;
+}
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 3rem;
+}
+.steps > li + li { margin-top: 2.25rem; }
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -0.1rem;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+}
+.steps h3 { font-size: 1.1875rem; line-height: 1.6rem; }
+.steps p { margin: 0.6rem 0 0; }
+
+.code,
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.prose code {
+  font-size: 0.875em;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  background: var(--code-bg);
+}
+
+.code-block {
+  margin-top: 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+.code-block__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.code-block__bar .action { padding: 0.3rem 0.8rem; font-size: 0.875rem; }
+
+.code {
+  margin: 0;
+  padding: 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.code--wrap {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 24rem;
+  overflow-y: auto;
+}
+.code--scroll {
+  max-height: 28rem;
+  overflow: auto;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--code-bg);
+}
+
+.code-details { margin-top: 1.25rem; }
+.code-details summary {
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+}
+.code-details[open] summary { margin-bottom: 0.75rem; }

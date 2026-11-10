@@ -1,0 +1,37 @@
+You are helping me turn a medical lecture into a Jeopardy-style review game. The lecture is attached as a PDF.
+
+Write the game content as JSON in exactly the format shown at the end of this message.
+
+What to write:
+- 4 categories, each with 5 clues worth 100, 200, 300, 400, and 500 points. Order each category's clues from easiest (100) to hardest (500).
+- 1 Final Jeopardy clue that ties together an important idea from the lecture.
+- Give each category a short, playful name (2 to 4 words) based on the lecture's topics.
+- Write every clue so it can be answered from the text alone. Many lecture questions depend on an X-ray, ECG, or photo; rewrite those so the key finding is described in words, or skip them.
+- Keep each clue under 35 words. Keep each accepted response short (a few words is ideal), and include any detail the host needs to judge an answer as correct.
+- Use only facts that are stated in the lecture. Do not add outside facts.
+- For each clue, record the number of the lecture question or slide it came from. Use null if there isn't one.
+
+Before you finish, check your work:
+- Each answer matches what the lecture says.
+- No two clues test the same fact.
+- If the lecture contradicts itself, or a fact looks out of date or wrong, do not use it in a clue. List it after the JSON under the heading "Facts to double-check".
+
+Return the JSON first, in a single code block, with nothing else inside the block. It must be valid JSON: double quotes only, no comments, no trailing commas.
+
+Format:
+{
+  "title": "Name of the game",
+  "eyebrow": "Short line shown above the title, for example: Pediatric EM · Board Review",
+  "edition": "Short line shown below the title, for example: Orthopedics Edition",
+  "source": "Clues adapted from [lecture title] · [presenter] · [month year]",
+  "values": [100, 200, 300, 400, 500],
+  "categories": [
+    ["Category name",
+      ["100-point clue", "Accepted response", 1],
+      ["200-point clue", "Accepted response", 2],
+      ["300-point clue", "Accepted response", null],
+      ["400-point clue", "Accepted response", 4],
+      ["500-point clue", "Accepted response", 5]]
+  ],
+  "finale": ["Final category name", "Final clue", "Accepted response", 6]
+}

@@ -8,6 +8,8 @@ Astro static site for Niharika Goparaju (PEM physician, Dell Children's / UT Aus
 - `src/data/about.md` — home-page bio (markdown).
 - `src/data/ai-literacy.ts` — presentations and resource lists rendered by `src/pages/ai-literacy.astro`.
 - `public/presentations/`, `public/resources/` — uploaded files, referenced as `/presentations/<file>` etc.
+- `public/games/multiverse-showdown-ortho.html` — the review game. Must stay a single self-contained file (no external CSS/JS/fonts) so visitors can download and run it offline. All content lives in the JSON `GAME` block between the `GAME CONTENT: START/END` comments; `downloadGame()` relies on those markers. The guide page (`src/pages/ai-literacy/review-game.astro`) reads that block at build time.
+- `src/data/review-game-prompt.txt` — the prompt shown on the guide page. Its JSON format must match what the game's `parseGame()` accepts.
 - `src/styles/global.css` — all styling; design tokens at the top.
 
 ## Rules
