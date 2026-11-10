@@ -19,5 +19,6 @@ Astro static site for Niharika Goparaju (PEM physician, Dell Children's / UT Aus
 - The site is served from the root (`https://niharikagoparaju.github.io/`), but still wrap internal hrefs in `withBase()` from `src/lib/url.ts` so a future `base` or domain change stays a one-line config edit. In markdown, use relative links.
 - Do not invent biographical facts, credentials, titles, or talk details. Leave a `TODO` and ask.
 - Design: the one decorative motif is the resuscitation-tape color band (`src/components/Band.astro`). Keep everything else quiet; don't add new accent colors, cards, or animations.
+- In `.astro` markup, never start or end a line with an inline tag (`<strong>`, `<a>`, `<code>`, `<em>`): Astro drops the line-break space beside it, gluing words together. Keep a word on the same line as the tag.
 - Verify with `npm run check && npm run build` (Node 24 via `nvm use`).
 - A future blog should use an Astro content collection (`src/content.config.ts`, posts in `src/content/blog/`).

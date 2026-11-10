@@ -5,9 +5,12 @@ import { withBase } from '../../lib/url';
 import prompt from '../../data/review-game-prompt.txt?raw';
 import gameHtml from '../../../public/games/pem-jeopardy-ortho.html?raw';
 
+// Authoring note: Astro drops the line-break space next to an inline tag, on either side.
+// Never start or end a line with <strong>, <a>, <code>, or <em>; keep a word beside it.
+
 const title = 'Build a review game from your lecture';
 const lede =
-  'Turn a lecture into a Jeopardy-style game for your next conference, using an AI chatbot and one free file. No coding needed.';
+  'Turn a lecture into a Jeopardy-style game for your next conference, using an AI chatbot and a free game that runs in your browser. No coding needed.';
 
 const gameUrl = withBase('/games/pem-jeopardy-ortho.html');
 // Show the example's real content block, so this page always matches the file.
@@ -22,8 +25,7 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
     <figcaption>
       <span>This example was made from an orthopedic board review lecture, using the prompt below.</span>
       <ul class="actions">
-        <li><a class="action" href={gameUrl} target="_blank" rel="noopener">Open full screen</a></li>
-        <li><a class="action action--primary" href={gameUrl} download="pem-jeopardy.html">Download the game file</a></li>
+        <li><a class="action action--primary" href={gameUrl} target="_blank" rel="noopener">Open full screen</a></li>
       </ul>
     </figcaption>
   </figure>
@@ -32,16 +34,10 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
     <h2 id="need">What you need</h2>
     <div class="prose">
       <ul>
-        <li>
-          <strong>The game file.</strong> It's a single web page that runs in any browser, works offline,
-          and needs nothing installed.
-        </li>
         <li><strong>Your lecture as a PDF.</strong></li>
-        <li>
-          <strong>An AI chatbot that can read PDFs</strong>, such as Claude, ChatGPT, Gemini, or Microsoft
-          Copilot. Use one your institution approves.
-        </li>
+        <li><strong>An AI chatbot that can read PDFs</strong>, such as Claude, ChatGPT, Gemini, or Microsoft Copilot. Use one your institution approves.</li>
       </ul>
+      <p>The game itself runs on this site, so there's nothing to install.</p>
     </div>
   </section>
 
@@ -49,19 +45,10 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
     <h2 id="steps">Steps</h2>
     <ol class="steps">
       <li>
-        <h3>Download the game file</h3>
-        <p>
-          Choose <a href={gameUrl} download="pem-jeopardy.html">Download the game file</a> and save
-          it somewhere easy to find. Double-click it to open it in your browser. You'll see the
-          orthopedics example, ready to play.
-        </p>
-      </li>
-
-      <li>
         <h3>Save your lecture as a PDF</h3>
         <p>
-          In PowerPoint, choose <strong>File → Export</strong> (or <strong>Save As</strong>) and pick PDF. In Google
-          Slides, choose <strong>File → Download → PDF</strong>.
+          In PowerPoint, choose <strong>File → Export</strong> (or <strong>Save As</strong>) and pick PDF.
+          In Google Slides, choose <strong>File → Download → PDF</strong>.
         </p>
         <p>
           Before you upload it, remove anything that shouldn't leave your institution. Never put protected
@@ -101,10 +88,11 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
       </li>
 
       <li>
-        <h3>Load the clues into the game</h3>
+        <h3>Load your clues into the game</h3>
         <p>
-          Copy the JSON block from the AI's reply. In the game, choose <strong>Customize Game</strong>, open
-          <strong>Paste clues from an AI</strong>, paste, and choose <strong>Load Clues</strong>.
+          Copy the JSON block from the AI's reply. <a href={gameUrl} target="_blank" rel="noopener">Open the game</a> in a
+          new tab, choose <strong>Customize Game</strong>, then open <strong>Paste clues from an AI</strong>. Paste,
+          choose <strong>Load Clues</strong>, then <strong>Save Clues</strong>.
         </p>
         <p>
           If something is off, such as a category missing a clue or extra text around the JSON, the game
@@ -114,35 +102,44 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
       </li>
 
       <li>
-        <h3>Save and download your game</h3>
+        <h3>Play</h3>
         <p>
-          Choose <strong>Save Clues</strong>, then <strong>Download Game File</strong>. You get a new file, named
-          after your game, with your clues built in. Changes made in Customize Game last only until you close
-          the page, so always download before you leave.
-        </p>
-      </li>
-
-      <li>
-        <h3>Play and share</h3>
-        <p>
-          Open your file on the computer connected to the projector. It doesn't need an internet connection.
-          To share it, email the file or put it on a shared drive. Anyone who opens it can play, customize,
-          and download their own version.
+          Put the game on the projector, enter team names, and choose <strong>Start Game</strong>. Your clues
+          stay loaded until you close or reload the tab.
         </p>
       </li>
     </ol>
   </section>
 
-  <section class="section" aria-labelledby="code">
-    <h2 id="code">If you're comfortable editing code</h2>
+  <section class="section" aria-labelledby="keep">
+    <h2 id="keep">Keep your game or share it</h2>
     <div class="prose">
       <p>
-        All of a game's content lives in one block near the top of the file's script, between the
-        <code>GAME CONTENT: START</code> and <code>GAME CONTENT: END</code> comments. You can open the file in
-        any text editor, replace that block with the AI's JSON, and save. Nothing else in the file needs to
-        change.
+        To reuse your game later, play without internet, or send it to colleagues, save your clues, then
+        choose <strong>Download Game File</strong> on the game's start screen. You get a single file, named
+        after your game, with your clues built in. Double-click it to open it in any browser.
+        Anyone you share it with can play it, customize it, and download their own version.
       </p>
     </div>
+  </section>
+
+  <section class="section" aria-labelledby="code">
+    <h2 id="code">Go further with an AI coding tool</h2>
+    <div class="prose">
+      <p>
+        Want more than new clues, like three teams, a timer, or your own colors? Download the game file and
+        ask an AI coding tool, such as Claude Code, to change it. The game is a single HTML file with no other
+        files or dependencies, so it's easy for an AI to read and edit in full.
+      </p>
+      <p>
+        All of a game's content lives in one block near the top of the file's script, between
+        the <code>GAME CONTENT: START</code> and <code>GAME CONTENT: END</code> comments. You can also
+        replace that block with the AI's JSON by hand in any text editor.
+      </p>
+    </div>
+    <ul class="actions">
+      <li><a class="action" href={gameUrl} download="pem-jeopardy.html">Download the game file</a></li>
+    </ul>
     <details class="code-details">
       <summary>See the example game's content block</summary>
       <pre class="code code--scroll"><code>const GAME = {contentBlock};</code></pre>
