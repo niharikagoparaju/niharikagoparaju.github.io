@@ -3,13 +3,13 @@ import Base from '../../layouts/Base.astro';
 import PageHead from '../../components/PageHead.astro';
 import { withBase } from '../../lib/url';
 import prompt from '../../data/review-game-prompt.txt?raw';
-import gameHtml from '../../../public/games/multiverse-showdown-ortho.html?raw';
+import gameHtml from '../../../public/games/pem-jeopardy-ortho.html?raw';
 
 const title = 'Build a review game from your lecture';
 const lede =
   'Turn a lecture into a Jeopardy-style game for your next conference, using an AI chatbot and one free file. No coding needed.';
 
-const gameUrl = withBase('/games/multiverse-showdown-ortho.html');
+const gameUrl = withBase('/games/pem-jeopardy-ortho.html');
 // Show the example's real content block, so this page always matches the file.
 const contentBlock = gameHtml.match(/const GAME = (\{[\s\S]*?\n\});/)?.[1];
 if (!contentBlock) throw new Error('Could not find the GAME block in the example game file');
@@ -18,12 +18,12 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
   <PageHead title={title} lede={lede} parent={{ title: 'AI literacy', href: '/ai-literacy/' }} />
 
   <figure class="game-embed">
-    <iframe src={gameUrl} title="Example game: Multiverse Showdown, orthopedics edition" loading="lazy"></iframe>
+    <iframe src={gameUrl} title="Example game: PEM Jeopardy, orthopedics edition" loading="lazy"></iframe>
     <figcaption>
       <span>This example was made from an orthopedic board review lecture, using the prompt below.</span>
       <ul class="actions">
         <li><a class="action" href={gameUrl} target="_blank" rel="noopener">Open full screen</a></li>
-        <li><a class="action action--primary" href={gameUrl} download="multiverse-showdown.html">Download the game file</a></li>
+        <li><a class="action action--primary" href={gameUrl} download="pem-jeopardy.html">Download the game file</a></li>
       </ul>
     </figcaption>
   </figure>
@@ -51,7 +51,7 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
       <li>
         <h3>Download the game file</h3>
         <p>
-          Choose <a href={gameUrl} download="multiverse-showdown.html">Download the game file</a> and save
+          Choose <a href={gameUrl} download="pem-jeopardy.html">Download the game file</a> and save
           it somewhere easy to find. Double-click it to open it in your browser. You'll see the
           orthopedics example, ready to play.
         </p>
