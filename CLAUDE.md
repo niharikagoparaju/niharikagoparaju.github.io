@@ -14,7 +14,7 @@ Astro static site for Niharika Goparaju (PEM physician, Dell Children's / UT Aus
 
 - Commits are authored as Niharika (repo-local git config) and pushed with her SSH key. Do not add `Co-Authored-By` or other AI attribution lines to commit messages.
 
-- The site deploys under `base: '/personal'`. Never hardcode internal hrefs: wrap them in `withBase()` from `src/lib/url.ts`. In markdown, use relative links.
+- The site is served from the root (`https://niharikagoparaju.github.io/`), but still wrap internal hrefs in `withBase()` from `src/lib/url.ts` so a future `base` or domain change stays a one-line config edit. In markdown, use relative links.
 - Do not invent biographical facts, credentials, titles, or talk details. Leave a `TODO` and ask.
 - Design: the one decorative motif is the resuscitation-tape color band (`src/components/Band.astro`). Keep everything else quiet; don't add new accent colors, cards, or animations.
 - Verify with `npm run check && npm run build` (Node 24 via `nvm use`).

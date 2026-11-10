@@ -1,11 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// The repo is named "personal", so GitHub serves the site at
-//   https://niharikagoparaju.github.io/personal/
-// If the repo is renamed to "niharikagoparaju.github.io", delete the `base` line.
-// For a custom domain, set `site` to it, delete `base`, and add public/CNAME.
+// The repo is named "niharikagoparaju.github.io", so GitHub serves the site at the root:
+//   https://niharikagoparaju.github.io/
+// For a custom domain, set `site` to it and add public/CNAME containing the domain.
 export default defineConfig({
   site: 'https://niharikagoparaju.github.io',
-  base: '/personal',
 });

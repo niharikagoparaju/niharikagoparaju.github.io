@@ -2,7 +2,7 @@
 
 Personal site for Niharika Goparaju, pediatric emergency medicine physician at Dell Children's Medical Center and faculty at UT Austin Dell Medical School. Built with [Astro](https://astro.build) and published to GitHub Pages by GitHub Actions.
 
-Live at **https://niharikagoparaju.github.io/personal/**
+Live at **https://niharikagoparaju.github.io/**
 
 ## Pages
 
@@ -36,7 +36,7 @@ Needs Node 24 (see `.nvmrc`).
 ```sh
 nvm use
 npm install
-npm run dev      # http://localhost:4321/personal/
+npm run dev      # http://localhost:4321/
 npm run build    # production build into dist/
 npm run check    # type-check
 ```
@@ -44,5 +44,3 @@ npm run check    # type-check
 ## Deploying
 
 Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it. One-time setup: in the GitHub repo, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
-
-If the repo is ever renamed to `niharikagoparaju.github.io` (so the site lives at the root URL), delete the `base` line in `astro.config.mjs`.
