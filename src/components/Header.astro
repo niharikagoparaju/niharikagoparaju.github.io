@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+import { withBase } from '../lib/url';
+
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+---
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="site-name" href={withBase('/')}>{site.name}</a>
+    <nav aria-label="Main">
+      <ul class="nav">
+        {site.nav.map((item) => {
+          const href = withBase(item.href);
+          return (
+            <li>
+              <a href={href} aria-current={current === href.replace(/\/?$/, '/') ? 'page' : undefined}>
+                {item.title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  </div>
+</header>

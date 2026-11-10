@@ -1,0 +1,411 @@
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+
+:root {
+  --paper: #f5f7fa;
+  --ink: #172033;
+  --muted: #556074;
+  --rule: #dce1e8;
+  --accent: #1f5fa8;
+  --accent-hover: #164a85;
+  --focus: #1f5fa8;
+
+  /* Zones of a length-based pediatric resuscitation tape */
+  --zone-grey: #a3a9b2;
+  --zone-pink: #efa3bf;
+  --zone-red: #d8473f;
+  --zone-purple: #7a52a6;
+  --zone-yellow: #f1c232;
+  --zone-white: #ffffff;
+  --zone-blue: #2f6dbf;
+  --zone-orange: #ec8a2e;
+  --zone-green: #3f9a53;
+
+  --font-display: "Schibsted Grotesk Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+
+  --measure: 42rem;
+  --gutter: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0f1522;
+    --ink: #e6eaf2;
+    --muted: #9aa5b8;
+    --rule: #263043;
+    --accent: #8ab8f0;
+    --accent-hover: #b3d1f6;
+    --focus: #8ab8f0;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+h2 { font-size: 1.5rem; font-weight: 600; }
+h3 { font-size: 1.1875rem; font-weight: 600; }
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover { color: var(--accent-hover); text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+.wrap {
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  padding: 0.5rem 0.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  z-index: 10;
+}
+.skip-link:focus { top: 0.5rem; }
+
+/* ==========================================================================
+   Header and footer
+   ========================================================================== */
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-block: 1.25rem;
+}
+
+.site-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding-block: 0.25rem;
+}
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+.site-footer {
+  margin-top: 6rem;
+  padding-block: 2rem 3rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.site-footer p { margin: 0 0 0.25rem; }
+.site-footer__disclaimer { max-width: 36rem; }
+
+/* ==========================================================================
+   The band
+   ========================================================================== */
+
+.band {
+  display: flex;
+  width: 9rem;
+  height: 6px;
+  margin-top: 1rem;
+}
+
+.band span { flex: 1; }
+.band span:nth-child(1) { background: var(--zone-grey); }
+.band span:nth-child(2) { background: var(--zone-pink); }
+.band span:nth-child(3) { background: var(--zone-red); }
+.band span:nth-child(4) { background: var(--zone-purple); }
+.band span:nth-child(5) { background: var(--zone-yellow); }
+.band span:nth-child(6) { background: var(--zone-white); box-shadow: inset 0 0 0 1px var(--rule); }
+.band span:nth-child(7) { background: var(--zone-blue); }
+.band span:nth-child(8) { background: var(--zone-orange); }
+.band span:nth-child(9) { background: var(--zone-green); }
+
+@media (prefers-color-scheme: dark) {
+  .band span:nth-child(6) { box-shadow: none; }
+}
+
+.band--hero {
+  width: 100%;
+  height: 14px;
+  margin-top: 1.25rem;
+}
+
+/* The one moment of motion: the zones lay down left to right on first load. */
+@media (prefers-reduced-motion: no-preference) {
+  .band--hero span {
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: zone-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  .band--hero span:nth-child(2) { animation-delay: 70ms; }
+  .band--hero span:nth-child(3) { animation-delay: 140ms; }
+  .band--hero span:nth-child(4) { animation-delay: 210ms; }
+  .band--hero span:nth-child(5) { animation-delay: 280ms; }
+  .band--hero span:nth-child(6) { animation-delay: 350ms; }
+  .band--hero span:nth-child(7) { animation-delay: 420ms; }
+  .band--hero span:nth-child(8) { animation-delay: 490ms; }
+  .band--hero span:nth-child(9) { animation-delay: 560ms; }
+}
+
+@keyframes zone-in {
+  to { transform: scaleX(1); }
+}
+
+/* ==========================================================================
+   Home
+   ========================================================================== */
+
+.hero {
+  padding-block: 3.5rem 2.5rem;
+}
+
+.hero__mark {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.hero__name {
+  font-size: clamp(2.75rem, 10vw, 5.25rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.hero__roles {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.hero__roles li + li { margin-top: 0.35rem; }
+
+.about--with-photo {
+  display: grid;
+  gap: 2rem;
+}
+
+.about__photo {
+  width: 11rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+@media (min-width: 760px) {
+  .about--with-photo {
+    grid-template-columns: 1fr 11rem;
+    align-items: start;
+  }
+  .about--with-photo .about__photo { grid-column: 2; grid-row: 1; }
+  .about--with-photo .prose { grid-column: 1; grid-row: 1; }
+}
+
+/* ==========================================================================
+   Inner pages
+   ========================================================================== */
+
+.page-head {
+  padding-block: 3rem 1.5rem;
+}
+
+.page-head h1 {
+  font-size: clamp(2.25rem, 7vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 1.25rem 0 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   Prose
+   ========================================================================== */
+
+/* Flow spacing: every block child gets the same rhythm; headings get more room above. */
+.prose > * { margin-block: 0; }
+.prose > * + * { margin-top: 1.1em; }
+.prose > * + h2 { margin-top: 2.5rem; }
+.prose > h2 + * { margin-top: 0.75rem; }
+.prose ul { padding-left: 1.25rem; }
+.prose li + li { margin-top: 0.3em; }
+.prose li::marker { color: var(--muted); }
+
+.prose .links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+}
+.prose .links li + li { margin-top: 0; }
+
+/* ==========================================================================
+   AI literacy: presentations and resources
+   ========================================================================== */
+
+.section { margin-top: 3.5rem; }
+.section > h2 + * { margin-top: 1.25rem; }
+
+.talks {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.talk {
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+.talk:last-child { border-bottom: 1px solid var(--rule); }
+
+.talk__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+.talk__meta time { font-weight: 600; color: var(--ink); }
+
+.talk__title {
+  margin-top: 0.4rem;
+  font-size: 1.3125rem;
+}
+
+.talk__desc { margin: 0.5rem 0 0; }
+
+.actions {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.action {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+  text-decoration: none;
+}
+.action:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.action--primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.action--primary:hover {
+  color: var(--paper);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.resource-group {
+  margin-top: 1.75rem;
+  font-size: 1.0625rem;
+}
+.section > h2 + .resource-group { margin-top: 1.25rem; }
+
+.resources {
+  margin: 0.6rem 0 0;
+  padding-left: 1.25rem;
+}
+.resources li + li { margin-top: 0.6em; }
+.resources__note {
+  display: block;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}

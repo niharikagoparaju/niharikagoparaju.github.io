@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Band from '../components/Band.astro';
+import { Content as About } from '../data/about.md';
+import { site } from '../data/site';
+import { withBase } from '../lib/url';
+
+const links = site.links.filter((l) => l.url);
+---
+<Base>
+  <section class="hero">
+    <div class="hero__mark">
+      <h1 class="hero__name">{site.name}</h1>
+      <Band size="hero" />
+    </div>
+    <ul class="hero__roles">
+      {site.roles.map((role) => <li>{role}</li>)}
+    </ul>
+  </section>
+
+  <div class:list={['about', site.photo && 'about--with-photo']}>
+    {site.photo && <img class="about__photo" src={withBase(site.photo)} alt={`Portrait of ${site.name}`} />}
+    <div class="prose">
+      <About />
+      {links.length > 0 && (
+        <>
+          <h2>Contact</h2>
+          <ul class="links">
+            {links.map((l) => <li><a href={l.url}>{l.label}</a></li>)}
+          </ul>
+        </>
+      )}
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,14 @@
+---
+import Band from './Band.astro';
+
+interface Props {
+  title: string;
+  lede?: string;
+}
+const { title, lede } = Astro.props;
+---
+<header class="page-head">
+  <h1>{title}</h1>
+  <Band />
+  {lede && <p class="lede">{lede}</p>}
+</header>

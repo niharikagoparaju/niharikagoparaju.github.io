@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { presentations, resources } from '../data/ai-literacy';
+import { withBase, absoluteUrl } from '../lib/url';
+
+const title = 'AI literacy';
+const lede = 'Presentations and resources on understanding and using AI in clinical medicine.';
+
+const talks = [...presentations].sort((a, b) => b.date.localeCompare(a.date));
+
+const formatMonth = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const officeViewer = (file: string) =>
+  `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(absoluteUrl(file, Astro.site))}`;
+---
+<Base title={title} description={lede}>
+  <PageHead title={title} lede={lede} />
+
+  <div class="prose">
+    <!-- TODO: A short intro to the AI literacy work: who it's for and what it covers. -->
+    <p>
+      Slides from past talks are below. Select <strong>View slides</strong> to open a deck in your
+      browser, or download the original PowerPoint to reuse it.
+    </p>
+  </div>
+
+  <section class="section" aria-labelledby="presentations">
+    <h2 id="presentations">Presentations</h2>
+    {talks.length > 0 ? (
+      <ol class="talks" reversed>
+        {talks.map((p) => (
+          <li class="talk">
+            <p class="talk__meta">
+              <time datetime={p.date}>{formatMonth(p.date)}</time>
+              {p.venue && <span>{p.venue}</span>}
+            </p>
+            <h3 class="talk__title">{p.title}</h3>
+            {p.description && <p class="talk__desc">{p.description}</p>}
+            <ul class="actions">
+              {p.file && (
+                <>
+                  <li><a class="action action--primary" href={officeViewer(p.file)} target="_blank" rel="noopener">View slides</a></li>
+                  <li><a class="action" href={withBase(p.file)} download>Download PowerPoint</a></li>
+                </>
+              )}
+              {p.pdf && <li><a class="action" href={withBase(p.pdf)}>Download PDF</a></li>}
+              {p.link && <li><a class="action" href={p.link}>{p.linkLabel ?? 'Related link'}</a></li>}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <p class="empty">Slides will be posted here after each talk.</p>
+    )}
+  </section>
+
+  <section class="section" aria-labelledby="resources">
+    <h2 id="resources">Resources</h2>
+    {resources.length > 0 ? (
+      resources.map((g) => (
+        <>
+          <h3 class="resource-group">{g.group}</h3>
+          <ul class="resources">
+            {g.items.map((r) => (
+              <li>
+                <a href={withBase(r.url)}>{r.title}</a>
+                {r.note && <span class="resources__note">{r.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </>
+      ))
+    ) : (
+      <p class="empty">Handouts and reading lists will be added here.</p>
+    )}
+  </section>
+</Base>

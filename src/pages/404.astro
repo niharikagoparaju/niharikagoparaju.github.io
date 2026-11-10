@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { withBase } from '../lib/url';
+---
+<Base title="Page not found">
+  <PageHead title="Page not found" />
+  <div class="prose">
+    <p>
+      That address doesn't match any page on this site. Go to the
+      <a href={withBase('/')}>home page</a> or the <a href={withBase('/ai-literacy/')}>AI literacy page</a>.
+    </p>
+  </div>
+</Base>

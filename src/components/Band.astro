@@ -1,0 +1,10 @@
+---
+// Color band modeled on the zones of a length-based pediatric resuscitation tape.
+interface Props {
+  size?: 'hero';
+}
+const { size } = Astro.props;
+---
+<div class:list={['band', size && `band--${size}`]} aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
