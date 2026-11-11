@@ -48,13 +48,11 @@ const officeViewer = (file: string) =>
             <h3 class="talk__title">{p.title}</h3>
             {p.description && <p class="talk__desc">{p.description}</p>}
             <ul class="actions">
-              {p.file && (
-                <>
-                  <li><a class="action action--primary" href={officeViewer(p.file)} target="_blank" rel="noopener">View slides</a></li>
-                  <li><a class="action" href={withBase(p.file)} download>Download PowerPoint</a></li>
-                </>
+              {(p.pdf || p.file) && (
+                <li><a class="action action--primary" href={p.pdf ? withBase(p.pdf) : officeViewer(p.file!)} target="_blank" rel="noopener">View slides</a></li>
               )}
-              {p.pdf && <li><a class="action" href={withBase(p.pdf)}>Download PDF</a></li>}
+              {p.file && <li><a class="action" href={withBase(p.file)} download>Download PowerPoint</a></li>}
+              {p.pdf && <li><a class="action" href={withBase(p.pdf)} download>Download PDF</a></li>}
               {p.link && <li><a class="action" href={p.link}>{p.linkLabel ?? 'Related link'}</a></li>}
             </ul>
           </li>

@@ -6,6 +6,8 @@
 //   1. Put the .pptx in public/presentations/ (a filename without spaces is tidiest,
 //      e.g. 2026-11-ai-literacy-grand-rounds.pptx).
 //   2. Add an entry to `presentations` below. Order doesn't matter; newest shows first.
+//   3. Export a PDF too and set `pdf`. "View slides" opens the PDF when there is one;
+//      otherwise it uses Microsoft's online viewer, which can't open .pptx files over ~10 MB.
 //
 // To add a handout, put the file in public/resources/ and link it as '/resources/<file>'.
 
@@ -96,6 +98,15 @@ export const dataMd = {
 };
 
 export const presentations: Presentation[] = [
+  {
+    title: 'Learning with AI: From classroom to bedside',
+    date: '2026-11-11',
+    venue: 'Joint Texas PEM Fellowship Conference',
+    description:
+      'How medical students and schools use AI today, what it changes about teaching medicine, the AI literacy skills our learners need, and practical uses for PEM teaching and learning.',
+    file: '/presentations/2026-11-learning-with-ai-pem-fellows.pptx',
+    pdf: '/presentations/2026-11-learning-with-ai-pem-fellows.pdf',
+  },
   // {
   //   title: 'AI literacy for pediatric emergency medicine',
   //   date: '2026-11-01',
