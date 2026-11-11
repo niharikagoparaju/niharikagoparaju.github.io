@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+import data from '../data/publications.json';
+import { extraPublications, type Publication } from '../data/publications-extra';
+
+// Most of the list is synced from ORCID (with citation details from Crossref) before every
+// build by scripts/fetch-publications.mjs; edit the record on ORCID, not that data. Works that
+// aren't on ORCID are added by hand in src/data/publications-extra.ts.
+type Pub = Publication;
+
+const title = 'Publications';
+const lede = 'Peer-reviewed articles and conference abstracts, newest first.';
+const orcidUrl = `https://orcid.org/${data.orcid}`;
+
+// ORCID entries win over hand-added ones for the same work.
+const orcidPubs = data.publications as Pub[];
+const key = (p: Pub) => [p.doi?.toLowerCase(), p.url?.toLowerCase(), p.title.toLowerCase()];
+const seen = new Set(orcidPubs.flatMap(key).filter(Boolean));
+const all = [...orcidPubs, ...extraPublications.filter((p) => !key(p).some((k) => k && seen.has(k)))].sort((a, b) =>
+  b.date.localeCompare(a.date),
+);
+const isAbstract = (p: Pub) => p.kind === 'abstract' || p.type === 'conference-abstract';
+
+const sections = [
+  { id: 'articles', heading: 'Peer-reviewed articles', pubs: all.filter((p) => !isAbstract(p)) },
+  { id: 'abstracts', heading: 'Conference abstracts', pubs: all.filter(isAbstract) },
+].filter((s) => s.pubs.length > 0);
+
+// Group by year, newest first.
+const yearsOf = (pubs: Pub[]) => [...new Set(pubs.map((p) => p.year))].sort((a, b) => b.localeCompare(a));
+
+// AMA style: list all authors up to six; beyond that, the first three and "et al".
+const shownAuthors = (p: Pub) =>
+  p.authors.length > 6 && p.authors.slice(0, 3).some((a) => a.self) ? p.authors.slice(0, 3) : p.authors;
+const etAl = (p: Pub) => shownAuthors(p).length < p.authors.length;
+
+// AMA-style source: Journal. 2024;84(6):651-657.
+const issue = (p: Pub) =>
+  [p.year, p.volume && `;${p.volume}`, p.volume && p.issue && `(${p.issue})`, p.volume && p.pages && `:${p.pages}`]
+    .filter(Boolean)
+    .join('');
+const endsSentence = (text: string) => /[.?!]$/.test(text);
+const onlineDate = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+---
+<Base title={title} description={`Publications by ${site.name}.`}>
+  <PageHead title={title} lede={lede} />
+
+  {sections.map((section) => (
+    <section class="section pub-section" aria-labelledby={section.id}>
+      <h2 id={section.id}>{section.heading}</h2>
+      <div class="pub-timeline">
+        {yearsOf(section.pubs).map((year) => (
+          <section class="pub-year" aria-labelledby={`${section.id}-${year}`}>
+            <h3 class="pub-year__label" id={`${section.id}-${year}`}>{year}</h3>
+            <ol class="pub-list">
+              {section.pubs.filter((p) => p.year === year).map((p) => (
+                <li class="pub">
+                  <p class="pub__cite">
+                    <span class="pub__authors">{shownAuthors(p).map((a, i) => (<>{i > 0 && ', '}{a.self ? <strong>{a.name}</strong> : a.name}</>))}{etAl(p) && ', et al'}.</span>{' '}
+                    {p.url ? <a class="pub__title" href={p.url}>{p.title}</a> : <span class="pub__title">{p.title}</span>}{isAbstract(p) ? ' [abstract].' : endsSentence(p.title) ? '' : '.'}{' '}
+                    {p.journal && <cite>{p.journal}</cite>}{p.journal && '. '}{issue(p)}.
+                    {p.publishedOnline && <span class="pub__online">{' '}Published online {onlineDate(p.publishedOnline)}.</span>}
+                    {p.note && <span class="pub__online">{' '}{p.note}</span>}
+                  </p>
+                  {p.doi && <p class="pub__doi"><a href={p.url ?? `https://doi.org/${p.doi}`}>doi:{p.doi}</a></p>}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <p class="pubs-source">Peer-reviewed articles are synced from <a href={orcidUrl}>ORCID ({data.orcid})</a>.</p>
+</Base>

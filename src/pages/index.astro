@@ -10,7 +10,7 @@ const links = site.links.filter((l) => l.url);
 <Base>
   <section class="hero">
     <div class="hero__mark">
-      <h1 class="hero__name">{site.name}</h1>
+      <h1 class="hero__name">{site.name}<span class="hero__credentials">, {site.credentials}</span></h1>
       <Band size="hero" />
     </div>
     <ul class="hero__roles">
@@ -19,7 +19,7 @@ const links = site.links.filter((l) => l.url);
   </section>
 
   <div class:list={['about', site.photo && 'about--with-photo']}>
-    {site.photo && <img class="about__photo" src={withBase(site.photo)} alt={`Portrait of ${site.name}`} />}
+    {site.photo && <img class="about__photo" src={withBase(site.photo)} alt={`Portrait of ${site.name}`} width="480" height="480" />}
     <div class="prose">
       <About />
       {links.length > 0 && (

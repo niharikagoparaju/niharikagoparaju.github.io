@@ -1,0 +1,105 @@
+{
+  "orcid": "0000-0003-3983-4355",
+  "publications": [
+    {
+      "title": "How can we improve low-volume paediatric emergency departments to enhance readiness?",
+      "journal": "Evidence Based Nursing",
+      "authors": [
+        {
+          "name": "Goparaju N",
+          "self": true
+        },
+        {
+          "name": "Pines JM",
+          "self": false
+        }
+      ],
+      "date": "2026-01",
+      "volume": "29",
+      "issue": "1",
+      "pages": "37",
+      "publishedOnline": "2024-07-15",
+      "year": "2026",
+      "type": "journal-article",
+      "doi": "10.1136/ebnurs-2024-104046",
+      "url": "https://doi.org/10.1136/ebnurs-2024-104046"
+    },
+    {
+      "title": "Magnetic Mishap: Multidisciplinary Care for Magnet Ingestion in a 2-Year-Old",
+      "journal": "Emergency Care and Medicine",
+      "authors": [
+        {
+          "name": "Goparaju N",
+          "self": true
+        },
+        {
+          "name": "Yarbrough DP",
+          "self": false
+        },
+        {
+          "name": "Fuller G",
+          "self": false
+        }
+      ],
+      "date": "2025-07-08",
+      "volume": "2",
+      "issue": "3",
+      "pages": "32",
+      "publishedOnline": null,
+      "year": "2025",
+      "type": "other",
+      "doi": "10.3390/ecm2030032",
+      "url": "https://doi.org/10.3390/ecm2030032"
+    },
+    {
+      "title": "Picture This: Text-to-Image Models Transforming Pediatric Emergency Medicine",
+      "journal": "Annals of Emergency Medicine",
+      "authors": [
+        {
+          "name": "Goparaju N",
+          "self": true
+        }
+      ],
+      "date": "2024-12",
+      "volume": "84",
+      "issue": "6",
+      "pages": "651-657",
+      "publishedOnline": null,
+      "year": "2024",
+      "type": "journal-article",
+      "doi": "10.1016/j.annemergmed.2024.07.019",
+      "url": "https://doi.org/10.1016/j.annemergmed.2024.07.019"
+    },
+    {
+      "title": "Subgroup Analyses of Randomized Clinical Trials in Heart Failure: Facts and Numbers",
+      "journal": "ESC Heart Failure",
+      "authors": [
+        {
+          "name": "Vidic A",
+          "self": false
+        },
+        {
+          "name": "Chibnall JT",
+          "self": false
+        },
+        {
+          "name": "Goparaju N",
+          "self": true
+        },
+        {
+          "name": "Hauptman PJ",
+          "self": false
+        }
+      ],
+      "date": "2016-09-01",
+      "volume": "3",
+      "issue": "3",
+      "pages": "152-157",
+      "publishedOnline": null,
+      "year": "2016",
+      "type": "journal-article",
+      "doi": "10.1002/ehf2.12093",
+      "url": "https://doi.org/10.1002/ehf2.12093"
+    }
+  ]
+}

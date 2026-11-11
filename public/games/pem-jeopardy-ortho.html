@@ -22,9 +22,9 @@ button,input,textarea{font:inherit;color:inherit}
 .masthead{text-align:center;margin-bottom:28px}
 .masthead .eyebrow,.masthead .edition{color:var(--muted);font-weight:600;font-size:clamp(.85rem,1.6vw,1rem)}
 .masthead h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6.5vw,4.5rem);line-height:1;letter-spacing:-.025em;margin:.12em 0 .14em}
-[data-view="board"] .masthead,[data-view="clue"] .masthead,[data-view="final"] .masthead{display:flex;justify-content:center;align-items:baseline;gap:.6em;margin-bottom:16px}
-[data-view="board"] .masthead .eyebrow,[data-view="clue"] .masthead .eyebrow,[data-view="final"] .masthead .eyebrow{display:none}
-[data-view="board"] .masthead h1,[data-view="clue"] .masthead h1,[data-view="final"] .masthead h1{font-size:1.25rem;letter-spacing:-.01em;margin:0}
+body:not([data-view="setup"]) .masthead{display:flex;justify-content:center;align-items:baseline;gap:.6em;margin-bottom:16px}
+body:not([data-view="setup"]) .masthead .eyebrow{display:none}
+body:not([data-view="setup"]) .masthead h1{font-size:1.25rem;letter-spacing:-.01em;margin:0}
 
 /* Buttons */
 button{border:1px solid var(--line);border-radius:10px;padding:.6em 1.05em;background:var(--raised);font-weight:600;cursor:pointer;line-height:1.25}
@@ -77,7 +77,6 @@ textarea{resize:vertical;min-height:72px}
 .tile{min-height:clamp(48px,9vh,88px);padding:0;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-family:var(--display);font-weight:800;font-size:clamp(1.2rem,3.4vw,2.6rem);font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--ink)}
 .tile:hover:not(:disabled){background:color-mix(in srgb,var(--c) 18%,var(--surface));border-color:var(--c)}
 .tile.used{background:transparent;border-style:dashed;border-color:#262f3f;opacity:1}
-[data-view="setup"] .tile:not(.used){opacity:.55}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:16px}
 
 /* Clue screen */
@@ -106,28 +105,33 @@ textarea{resize:vertical;min-height:72px}
 .result small{color:var(--muted)}
 .results{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:46rem;margin:0 auto}
 
-/* Customize screen */
-.editor{max-width:860px;margin:0 auto}
-.editor > h2{font-size:1.5rem;font-weight:700}
-.editor > p.muted{margin:6px 0 18px}
-.editor details > summary{cursor:pointer;font-weight:700}
-.edit-block{border-top:1px solid var(--line);padding:16px 0}
-.edit-block > summary{font-size:1.05rem}
-.edit-block[open] > summary{margin-bottom:12px}
-.edit-block label + label{margin-top:12px}
-.edit-cat{--c:var(--zf);border-top:1px solid var(--line);padding:16px 0 10px}
-.edit-cat__name{color:var(--muted)}
-.edit-cat__name .label{display:flex;align-items:center;gap:.5em}
-.edit-cat__name .label::before{content:"";width:.7em;height:.7em;border-radius:50%;background:var(--c)}
-.edit-cat__name input{margin-top:2px;padding:6px 2px;font-size:1.3rem;font-weight:700;background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0}
-.edit-cat__name input:hover{border-bottom-color:var(--c)}
-.edit-cat details{margin-top:8px}
-.edit-cat summary{width:max-content;font-size:.9rem;color:var(--muted)}
-.edit-cat summary:hover{color:var(--ink)}
-.edit-row{padding:12px 0;border-bottom:1px solid #252e3d}
-.edit-row:last-child{border-bottom:0}
-.edit-row .label{display:block;margin-bottom:8px;font-variant-numeric:tabular-nums}
-.editor-actions{display:flex;gap:8px;margin-top:8px}
+/* Load and edit screens */
+.tool{max-width:1000px;margin:0 auto}
+.tool-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 24px;padding-bottom:18px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.tool-head h2{font-size:1.5rem;font-weight:700}
+.tool-head p{margin-top:4px;max-width:62ch}
+.code-input{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.5;min-height:16rem}
+.tool-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.hint{color:var(--muted);font-weight:600;font-size:.9rem}
+.hint:hover{color:var(--ink)}
+.notice{margin:0 0 16px;padding:10px 14px;border-radius:10px;background:#1f3a2e;border:1px solid #2f6a4c;color:#d3f5df;font-weight:600}
+.editor .error:empty{display:none}
+.editor-body{display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px;align-items:start}
+.tabs{display:flex;flex-direction:column;gap:2px;position:sticky;top:16px}
+.tab{display:flex;align-items:center;gap:.6em;width:100%;padding:.6em .8em;border:0;border-radius:8px;background:transparent;color:var(--muted);text-align:left;font-weight:600}
+.tab:hover:not(:disabled){background:var(--raised);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--raised);color:var(--ink);box-shadow:inset 3px 0 0 var(--c,var(--ink))}
+.tab .dot{flex:none;width:.65em;height:.65em;border-radius:50%;background:var(--c)}
+.tab-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tab-divider{height:1px;margin:8px .4em;background:var(--line)}
+.pane h3{font-size:1.25rem;font-weight:700;margin-bottom:16px}
+.pane > label + label{margin-top:14px}
+.name-field{padding-bottom:10px;font-size:.85rem}
+.name-field input{margin-top:4px;padding:.4em .6em;font-size:1.4rem;font-weight:700}
+.clue-row{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.clue-row .pts{padding-top:28px;color:var(--c);font-family:var(--display);font-weight:800;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
+.clue-fields{display:grid;gap:12px}
+.clue-fields textarea{min-height:0}
 
 .status{min-height:1.5em;margin:14px 0 0;text-align:center;color:var(--muted);font-weight:600;font-size:.95rem}
 .source{margin-top:20px;text-align:center;color:var(--muted);font-size:.8rem}
@@ -148,6 +152,15 @@ textarea{resize:vertical;min-height:72px}
   .judge button{padding:.5em .7em;font-size:.9rem}
   .setup .actions{justify-content:flex-start}
 }
+@media(max-width:760px){
+  .editor-body{grid-template-columns:1fr;gap:16px}
+  .tabs{flex-direction:row;position:static;overflow-x:auto;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .tab{flex:none;width:auto}
+  .tab[aria-selected="true"]{box-shadow:inset 0 -3px 0 var(--c,var(--ink))}
+  .tab-divider{width:1px;height:auto;margin:6px 4px}
+  .clue-row{grid-template-columns:1fr;gap:6px}
+  .clue-row .pts{padding-top:0;font-size:1.2rem}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 <main>
@@ -160,7 +173,7 @@ textarea{resize:vertical;min-height:72px}
    GAME CONTENT: START
    This block is the only part that changes between games. You can edit it
    here, or skip code entirely: open this file in a browser, choose
-   Customize game, paste or edit your clues, then choose Download game file.
+   Load clues from AI or Edit clues, then choose Download game file.
    The content must stay valid JSON (double quotes, no trailing commas).
 
    categories: each category is ["Category name", clue, clue, ...]
@@ -329,7 +342,7 @@ function board() {
     `<section class="category" style="${zone(col)};grid-row:span ${values.length + 1};grid-template-rows:${rows};grid-template-rows:subgrid"><h2>${esc(category)}</h2>${clues.map((_, row) => {
       const id = col * values.length + row;
       const played = used.has(id);
-      return `<button type="button" class="tile${played ? " used" : ""}" data-action="tile:${id}" aria-label="${esc(category)}, ${values[row]} points${played ? ", played" : ""}" ${played || view === "setup" ? "disabled" : ""}>${played ? "" : values[row]}</button>`;
+      return `<button type="button" class="tile${played ? " used" : ""}" data-action="tile:${id}" aria-label="${esc(category)}, ${values[row]} points${played ? ", played" : ""}" ${played ? "disabled" : ""}>${played ? "" : values[row]}</button>`;
     }).join("")}</section>`).join("")}</div>
     ${view === "board" ? `<div class="foot"><span class="muted">${used.size} of ${total} clues played</span>
       <div class="actions">${button("undo","Undo last score","quiet",!last)}${used.size === total ? button("final","Go to Final Jeopardy","primary") : button("final","Skip to Final Jeopardy")}</div></div>` : ""}`;
@@ -337,28 +350,58 @@ function board() {
 function setup() {
   return `<section class="panel setup"><div class="fields">
     ${names.map((name,i) => `<label>Team ${i+1} name<input data-name="${i}" maxlength="32" value="${esc(name)}"></label>`).join("")}</div>
-    <div class="actions">${button("start","Start game","primary")}<div class="actions">${button("edit","Customize game","quiet")}${button("download","Download game file","quiet")}</div></div></section>` + rules() + board();
+    <div class="actions">${button("start","Start game","primary")}<div class="actions">${button("paste","Load clues from AI","quiet")}${button("edit","Edit clues","quiet")}${button("download","Download game file","quiet")}</div></div></section>` + rules() + board();
 }
+function importer() {
+  return `<section class="panel tool">
+    <div class="tool-head"><div><h2>Load clues from an AI</h2>
+      <p class="muted">Paste the JSON your AI chatbot returned. Loading replaces every category and clue in this game, then opens the editor so you can review them.</p></div></div>
+    <label>AI response (JSON)<textarea id="import-text" class="code-input" rows="14" spellcheck="false" placeholder='{ "title": "…", "categories": [ … ], "finale": [ … ] }'></textarea></label>
+    <p class="error" id="import-error" role="alert"></p>
+    <div class="tool-foot"><a class="hint" href="https://niharikagoparaju.github.io/ai-toolkit/review-game/" target="_blank" rel="noopener">Get the prompt for your AI chatbot</a>
+      <div class="actions">${button("cancel","Cancel","quiet")}${button("import","Load clues","primary")}</div></div>
+  </section>`;
+}
+let editorTab = "cat0";
 function editor() {
-  const field = (key, label, value, multiline = false, required = true) =>
-    `<label>${label}${multiline ? `<textarea ${required ? "required" : ""} data-edit="${key}">${esc(value)}</textarea>` : `<input ${required ? "required" : ""} data-edit="${key}" value="${esc(value)}">`}</label>`;
-  return `<form class="panel editor" id="editor" novalidate><h2>Customize game</h2>
-    <p class="muted">Paste clues from an AI, or edit names and clues by hand. Save when you're done, then download the game file to keep your version.</p>
-    <details class="edit-block"><summary>Paste clues from an AI</summary>
-      <label>AI response (JSON)<textarea id="import-text" rows="8" spellcheck="false" placeholder='{ "title": "…", "categories": [ … ], "finale": [ … ] }'></textarea></label>
-      <p class="error" id="import-error" role="alert"></p>${button("import","Load clues","primary")}</details>
-    <details class="edit-block"><summary>Title and source</summary>
-      ${field("meta:title","Game title",GAME.title)}
-      ${field("meta:eyebrow","Line above the title",GAME.eyebrow || "",false,false)}
-      ${field("meta:edition","Line below the title",GAME.edition || "",false,false)}
-      ${field("meta:source","Source credit",GAME.source || "",true,false)}</details>
-    ${categories.map(([title,...clues], col) => `<section class="edit-cat" style="${zone(col)}">
-      <label class="edit-cat__name"><span class="label">Category ${col+1}</span><input required data-edit="title:${col}" value="${esc(title)}"></label>
-      <details><summary>Edit clues</summary>${clues.map(([q,a],row) => `<div class="edit-row"><span class="label">${values[row]} points</span><div class="fields">${field(`q:${col}:${row}`,"Clue",q,true)}${field(`a:${col}:${row}`,"Accepted response",a,true)}</div></div>`).join("")}</details></section>`).join("")}
-    <section class="edit-cat">
-      <label class="edit-cat__name"><span class="label">Final Jeopardy</span><input required data-edit="final:0" value="${esc(finale[0])}"></label>
-      <details><summary>Edit clue</summary><div class="edit-row"><div class="fields">${field("final:1","Clue",finale[1],true)}${field("final:2","Accepted response",finale[2],true)}</div></div></details></section>
-    <p class="error" id="edit-error" role="alert"></p><div class="editor-actions">${button("save","Save clues","primary")}${button("cancel","Cancel","quiet")}</div></form>`;
+  const field = (key, label, value, multiline = false, required = true, rows = 2) =>
+    `<label>${label}${multiline ? `<textarea rows="${rows}" ${required ? "required" : ""} data-edit="${key}">${esc(value)}</textarea>` : `<input ${required ? "required" : ""} data-edit="${key}" value="${esc(value)}">`}</label>`;
+  const tabs = [
+    { key: "details", label: "Title and source" },
+    ...categories.map(([name], col) => ({ key: "cat" + col, label: name, style: zone(col) })),
+    { key: "final", label: "Final Jeopardy", style: "--c:var(--zf)" }
+  ];
+  if (!tabs.some(t => t.key === editorTab)) editorTab = "cat0";
+  const tab = t => `<button type="button" role="tab" class="tab" id="tab-${t.key}" data-action="tab:${t.key}" aria-controls="pane-${t.key}" aria-selected="${t.key === editorTab}" tabindex="${t.key === editorTab ? 0 : -1}"${t.style ? ` style="${t.style}"` : ""}>${t.style ? `<span class="dot" aria-hidden="true"></span>` : ""}<span class="tab-label">${esc(t.label)}</span></button>`;
+  const pane = (key, body, style = "") => `<section class="pane" role="tabpanel" id="pane-${key}" aria-labelledby="tab-${key}"${style ? ` style="${style}"` : ""}${key === editorTab ? "" : " hidden"}>${body}</section>`;
+  const clueRow = (pts, qKey, aKey, q, a) => `<div class="clue-row"><span class="pts">${pts}</span><div class="clue-fields">${field(qKey,"Clue",q,true,true,3)}${field(aKey,"Accepted response",a,true,true,2)}</div></div>`;
+  return `<form class="panel tool editor" id="editor" novalidate>
+    <div class="tool-head"><div><h2>Edit clues</h2><p class="muted">Choose a section to edit. Changes apply when you save.</p></div>
+      <div class="actions">${button("cancel","Cancel","quiet")}${button("save","Save changes","primary")}</div></div>
+    ${message ? `<p class="notice" role="status">${esc(message)}</p>` : ""}
+    <p class="error" id="edit-error" role="alert"></p>
+    <div class="editor-body">
+      <div class="tabs" role="tablist" aria-label="Sections">${tab(tabs[0])}<span class="tab-divider" role="presentation"></span>${tabs.slice(1).map(tab).join("")}</div>
+      <div class="panes">
+        ${pane("details", `<h3>Title and source</h3>${field("meta:title","Game title",GAME.title)}${field("meta:eyebrow","Line above the title",GAME.eyebrow || "",false,false)}${field("meta:edition","Line below the title",GAME.edition || "",false,false)}${field("meta:source","Source credit",GAME.source || "",true,false)}`)}
+        ${categories.map(([name, ...clues], col) => pane("cat" + col,
+          `<label class="name-field">Category ${col + 1} name<input required data-edit="title:${col}" value="${esc(name)}"></label>${clues.map(([q, a], row) => clueRow(values[row], `q:${col}:${row}`, `a:${col}:${row}`, q, a)).join("")}`,
+          zone(col))).join("")}
+        ${pane("final", `<label class="name-field">Final Jeopardy category<input required data-edit="final:0" value="${esc(finale[0])}"></label>${clueRow("Final", "final:1", "final:2", finale[1], finale[2])}`, "--c:var(--zf)")}
+      </div>
+    </div>
+  </form>`;
+}
+// Switch editor sections without re-rendering, so unsaved edits stay in their fields.
+function selectTab(key, focus = false) {
+  editorTab = key;
+  app.querySelectorAll('[role="tab"]').forEach(tab => {
+    const on = tab.id === "tab-" + key;
+    tab.setAttribute("aria-selected", on);
+    tab.tabIndex = on ? 0 : -1;
+    if (on && focus) tab.focus();
+  });
+  app.querySelectorAll('[role="tabpanel"]').forEach(pane => { pane.hidden = pane.id !== "pane-" + key; });
 }
 function answer(text, source) {
   return `<div class="answer enter"><span class="label">Answer</span><p>${esc(text)}</p>${source ? `<small>From lecture question ${esc(source)}</small>` : ""}</div>`;
@@ -404,9 +447,10 @@ function final() {
 }
 function render(focus = "", animateFinal = false) {
   document.body.dataset.view = view;
-  app.innerHTML = (view === "setup" || view === "edit" ? "" : scoreboard()) +
-    (view === "setup" ? setup() : view === "edit" ? editor() : view === "board" ? board() : view === "clue" ? clue() : final()) +
-    `<div class="status" role="status">${esc(message)}</div>`;
+  const tool = view === "edit" || view === "import";
+  app.innerHTML = (view === "setup" || tool ? "" : scoreboard()) +
+    (view === "setup" ? setup() : view === "edit" ? editor() : view === "import" ? importer() : view === "board" ? board() : view === "clue" ? clue() : final()) +
+    (view === "edit" ? "" : `<div class="status" role="status">${esc(message)}</div>`);
   if (focus) {
     const target = focus.split(", ").map(selector => app.querySelector(selector)).find(Boolean);
     target?.focus();
@@ -437,9 +481,9 @@ function saveEdits() {
   const fields = [...app.querySelectorAll("[data-edit]")];
   const blank = fields.find(field => field.required && !field.value.trim());
   if (blank) {
-    const section = blank.closest("details");
-    if (section) section.open = true;
-    document.querySelector("#edit-error").textContent = "Fill in each category, clue, and accepted response before saving.";
+    const pane = blank.closest('[role="tabpanel"]');
+    if (pane) selectTab(pane.id.slice(5));
+    document.querySelector("#edit-error").textContent = "Fill in every category name, clue, and accepted response before saving.";
     blank.focus();
     return;
   }
@@ -460,7 +504,7 @@ function saveEdits() {
   }
   renderMasthead();
   view = "setup";
-  message = "Clues saved. To keep this version, choose Download game file.";
+  message = "Changes saved. To keep this version, choose Download game file.";
   render('[data-action="download"]');
 }
 function closeClue() {
@@ -488,7 +532,9 @@ app.addEventListener("click", event => {
   message = "";
   switch(action) {
     case "start": rememberNames(); view = "board"; break;
-    case "edit": rememberNames(); view = "edit"; break;
+    case "edit": rememberNames(); editorTab = "cat0"; view = "edit"; render("#tab-cat0"); return;
+    case "paste": rememberNames(); view = "import"; render("#import-text"); return;
+    case "tab": selectTab(id); return;
     case "cancel": view = "setup"; break;
     case "save": saveEdits(); return;
     case "download": message = "Downloaded " + downloadGame() + ". Open it in any browser to play."; break;
@@ -502,12 +548,14 @@ app.addEventListener("click", event => {
         return;
       }
       reset();
+      editorTab = "cat0";
       view = "edit";
-      message = `Loaded ${categories.length} categories. Check the clues below, then choose Save clues.`;
-      render('[data-action="save"]');
+      message = `Loaded ${categories.length} categories from the AI. Review each section, then choose Save changes.`;
+      render("#tab-cat0");
       return;
     }
     case "tile":
+      if (view === "setup") rememberNames();
       active = Number(id); view = "clue"; tried = [false,false]; shown = false; resolved = false;
       render(".clue"); return;
     case "score": score(Number(id), ruling === "1"); return;
@@ -537,6 +585,19 @@ app.addEventListener("click", event => {
     case "again": reset(); break;
   }
   render(view === "board" ? '.tile:not(:disabled), [data-action="final"]' : view === "final" ? ".clue" : "");
+});
+app.addEventListener("keydown", event => {
+  if (event.target.getAttribute("role") !== "tab") return;
+  const tabs = [...app.querySelectorAll('[role="tab"]')];
+  const i = tabs.indexOf(event.target);
+  const next = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[event.key];
+  if (next === undefined) return;
+  event.preventDefault();
+  selectTab(tabs[(next + tabs.length) % tabs.length].id.slice(4), true);
+});
+app.addEventListener("input", event => {
+  const [kind, col] = (event.target.dataset?.edit || "").split(":");
+  if (kind === "title") app.querySelector(`#tab-cat${col} .tab-label`).textContent = event.target.value.trim() || `Category ${Number(col) + 1}`;
 });
 app.addEventListener("submit", event => {
   event.preventDefault();

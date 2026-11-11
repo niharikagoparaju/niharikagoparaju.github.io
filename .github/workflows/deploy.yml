@@ -1,4 +1,4 @@
-# Builds the Astro site and publishes it to GitHub Pages on every push to main.
+# Builds the Astro site and publishes it to GitHub Pages on every push to main, and weekly.
 # One-time setup: repo Settings > Pages > Build and deployment > Source: "GitHub Actions".
 name: Deploy to GitHub Pages
 
@@ -6,6 +6,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Weekly rebuild (Mondays 12:00 UTC) so new works on ORCID show up on the Publications page.
+  schedule:
+    - cron: '0 12 * * 1'
 
 permissions:
   contents: read

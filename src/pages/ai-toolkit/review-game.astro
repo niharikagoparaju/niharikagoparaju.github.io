@@ -8,7 +8,7 @@ import gameHtml from '../../../public/games/pem-jeopardy-ortho.html?raw';
 // Authoring note: Astro drops the line-break space next to an inline tag, on either side.
 // Never start or end a line with <strong>, <a>, <code>, or <em>; keep a word beside it.
 
-const title = 'Build a review game from your lecture';
+const title = 'Build a Jeopardy-style game from your lecture';
 const lede =
   'Turn a lecture into a Jeopardy-style game for your next conference, using an AI chatbot and a free game that runs in your browser. No coding needed.';
 
@@ -18,7 +18,7 @@ const contentBlock = gameHtml.match(/const GAME = (\{[\s\S]*?\n\});/)?.[1];
 if (!contentBlock) throw new Error('Could not find the GAME block in the example game file');
 ---
 <Base title={title} description={lede}>
-  <PageHead title={title} lede={lede} parent={{ title: 'AI literacy', href: '/ai-literacy/' }} />
+  <PageHead title={title} lede={lede} parent={{ title: 'AI Toolkit', href: '/ai-toolkit/' }} />
 
   <figure class="game-embed">
     <iframe src={gameUrl} title="Example game: PEM Jeopardy, orthopedics edition" loading="lazy"></iframe>
@@ -91,21 +91,21 @@ if (!contentBlock) throw new Error('Could not find the GAME block in the example
         <h3>Load your clues into the game</h3>
         <p>
           Copy the JSON block from the AI's reply. <a href={gameUrl} target="_blank" rel="noopener">Open the game</a> in a
-          new tab, choose <strong>Customize game</strong>, then open <strong>Paste clues from an AI</strong>. Paste,
-          choose <strong>Load clues</strong>, then <strong>Save clues</strong>.
+          new tab, choose <strong>Load clues from AI</strong>, paste, and choose <strong>Load clues</strong>.
         </p>
         <p>
-          If something is off, such as a category missing a clue or extra text around the JSON, the game
-          tells you what to fix. To reword a clue or change the title and source credit, open that section
-          and edit it directly.
+          The editor opens on your first category so you can review the clues. Use the tabs to check each
+          category, Final Jeopardy, and the title and source credit, then choose <strong>Save changes</strong>.
+          If something is off, such as a category missing a clue or extra text around the JSON, the game tells
+          you what to fix before loading.
         </p>
       </li>
 
       <li>
         <h3>Play</h3>
         <p>
-          Put the game on the projector, enter team names, and choose <strong>Start game</strong>. Your clues
-          stay loaded until you close or reload the tab.
+          Put the game on the projector, enter team names, and pick any tile to begin. Your clues stay
+          loaded until you close or reload the tab.
         </p>
       </li>
     </ol>

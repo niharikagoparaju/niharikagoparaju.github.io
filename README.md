@@ -1,6 +1,6 @@
 # Niharika Goparaju — personal site
 
-Personal site for Niharika Goparaju, pediatric emergency medicine physician at Dell Children's Medical Center and faculty at UT Austin Dell Medical School. Built with [Astro](https://astro.build) and published to GitHub Pages by GitHub Actions.
+Personal site for Niharika Goparaju, pediatric emergency medicine physician at Dell Children's Medical Center and assistant clinical professor at UT Austin Dell Medical School. Built with [Astro](https://astro.build) and published to GitHub Pages by GitHub Actions.
 
 Live at **https://niharikagoparaju.github.io/**
 
@@ -10,8 +10,11 @@ Live at **https://niharikagoparaju.github.io/**
 | --- | --- |
 | About (home) | `src/pages/index.astro`, bio text in `src/data/about.md` |
 | AI literacy | `src/pages/ai-literacy/index.astro`, content in `src/data/ai-literacy.ts` |
+| AI Toolkit | `src/pages/ai-toolkit/index.astro`, list in `src/data/ai-toolkit.ts` |
 | DATA-MD lecture series | `src/pages/ai-literacy/data-md.astro`, sessions in `src/data/ai-literacy.ts`, PDFs in `public/presentations/data-md/` |
-| Review game guide | `src/pages/ai-literacy/review-game.astro`, prompt in `src/data/review-game-prompt.txt`, game in `public/games/pem-jeopardy-ortho.html` |
+| Publications | `src/pages/publications.astro`, list in `src/data/publications.json` (synced from ORCID) plus `src/data/publications-extra.ts` (added by hand) |
+| Review game guide | `src/pages/ai-toolkit/review-game.astro`, prompt in `src/data/review-game-prompt.txt`, game in `public/games/pem-jeopardy-ortho.html` |
+| Simulation skill guide | `src/pages/ai-toolkit/simulation-builder.astro`, skill zip and example files in `public/skills/` |
 
 Name, roles, contact links, photo, footer, and the nav menu live in `src/data/site.ts`.
 
@@ -26,6 +29,8 @@ Name, roles, contact links, photo, footer, and the nav menu live in `src/data/si
 The **View slides** button opens the deck in Microsoft's free online viewer, so visitors don't need PowerPoint. That viewer can only reach the public site, so it won't work in local preview. Keep each file under 100 MB (GitHub's limit). Exporting a PDF copy too is a good idea for phones.
 
 **Add a handout or link:** put files in `public/resources/` and add them to `resources` in `src/data/ai-literacy.ts`.
+
+**Publications:** the list syncs from ORCID ([0000-0003-3983-4355](https://orcid.org/0000-0003-3983-4355)) before every build, and the site rebuilds weekly, so new works added to ORCID appear automatically. To refresh by hand, run `npm run publications`. Works that aren't on ORCID (such as conference abstracts) go in `src/data/publications-extra.ts`; set `kind: 'abstract'` to list one under Conference abstracts.
 
 **Edit the bio:** `src/data/about.md`.
 

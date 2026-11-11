@@ -1,0 +1,200 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { withBase, absoluteUrl } from '../../lib/url';
+
+// Authoring note: Astro drops the line-break space next to an inline tag, on either side.
+// Never start or end a line with <strong>, <a>, <code>, or <em>; keep a word beside it.
+//
+// The zip is built in the separate sim-drafter repo (scripts/package.sh) and copied to
+// public/skills/. Keep its filename: the install shortcuts below refer to it.
+
+const title = 'Draft a PEM simulation with an AI skill';
+const lede =
+  'A free skill for Claude and other AI assistants that drafts an in-person pediatric emergency simulation: a facilitator primer, a simulation outline, and a debrief sheet, as editable Word files.';
+
+const zipUrl = withBase('/skills/pem-simulation-builder.zip');
+
+// Example output: the skill's unedited files from one test run (sim-drafter repo,
+// tests/evals/results/v2-A). Publish them byte-for-byte; don't edit or rename.
+const exampleDir = '/skills/example-dka';
+const examples = [
+  { title: 'Facilitator primer', file: `${exampleDir}/DKA_1_Facilitator_Primer.docx` },
+  { title: 'Simulation outline', file: `${exampleDir}/DKA_2_Simulation_Outline.docx` },
+  { title: 'Debrief sheet', file: `${exampleDir}/DKA_3_Debrief_Sheet.docx` },
+];
+const officeViewer = (file: string) =>
+  `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(absoluteUrl(file, Astro.site))}`;
+---
+<Base title={title} description={lede}>
+  <PageHead title={title} lede={lede} parent={{ title: 'AI Toolkit', href: '/ai-toolkit/' }} />
+
+  <ul class="actions">
+    <li><a class="action action--primary" href={zipUrl} download>Download pem-simulation-builder.zip</a></li>
+  </ul>
+
+  <section class="section" aria-labelledby="get">
+    <h2 id="get">What you get</h2>
+    <div class="prose">
+      <ul>
+        <li><strong>Facilitator primer:</strong> clinical background, a medication table with doses for the patient, a prebrief script, and confederate role cards.</li>
+        <li><strong>Simulation outline:</strong> objectives, critical actions, supplies, and a stage table with triggers and cues.</li>
+        <li><strong>Debrief sheet:</strong> structured in the PEARLS phases, with an observation checklist and case-specific questions.</li>
+      </ul>
+      <p>The package is designed to align with the ASPiH Standards 2023 for simulation-based practice.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="install">
+    <h2 id="install">How to install</h2>
+    <div class="prose">
+      <h3>Claude (claude.ai, the website or desktop app)</h3>
+      <p>This is the easiest option. You need a Claude plan that includes skills.</p>
+      <ol>
+        <li>
+          Download the zip file. Don't unzip it. On a Mac, Safari may unzip it automatically and leave
+          you a folder. If so, right-click the folder and choose <strong>Compress</strong> to turn it back into a zip.
+        </li>
+        <li>In Claude, open <strong>Settings</strong>, then find <strong>Skills</strong> (under Capabilities).</li>
+        <li>Click <strong>Upload skill</strong> and choose the zip file.</li>
+        <li>
+          Make sure code execution is turned on in the same settings area. Claude needs it to create the
+          Word files.
+        </li>
+      </ol>
+
+      <h3>Claude Code</h3>
+      <ol>
+        <li>Unzip the download. You'll get a folder called <code>pem-simulation-builder</code>.</li>
+        <li>
+          Move that folder into the skills folder inside <code>.claude</code> in your home folder, so you
+          have <code>~/.claude/skills/pem-simulation-builder</code>.
+        </li>
+      </ol>
+      <p>
+        Shortcut: ask Claude Code to "install the skill from <code>~/Downloads/pem-simulation-builder.zip</code> into
+        my Claude skills folder."
+      </p>
+
+      <h3>OpenAI Codex</h3>
+      <ol>
+        <li>Unzip the download.</li>
+        <li>Move the <code>pem-simulation-builder</code> folder into <code>~/.codex/skills/</code>.</li>
+      </ol>
+      <p>
+        Shortcut: ask Codex to "install the skill from <code>~/Downloads/pem-simulation-builder.zip</code> into
+        my Codex skills folder."
+      </p>
+
+      <h3>ChatGPT</h3>
+      <p>
+        This hasn't been tested, but it may work wherever ChatGPT supports skills. If it can't make Word
+        files, you'll get the documents as text with the same structure.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="use">
+    <h2 id="use">How to use it</h2>
+    <div class="prose">
+      <p>Start a new chat and describe the simulation you want, for example:</p>
+      <ul>
+        <li>"Build a simulation on DKA for our second-year PEM fellows."</li>
+        <li>"Infant SVT sim, in situ in our ED, interprofessional team of nurses and residents."</li>
+        <li>"Make a mock code for status epilepticus in a 4-year-old, 20 minutes, focus on teamwork."</li>
+      </ul>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <h3>It states its assumptions</h3>
+        <p>Such as learner level, setting, and timing, so you can correct anything it got wrong.</p>
+      </li>
+      <li>
+        <h3>It checks current guidelines</h3>
+        <p>It looks up current guidance for the topic, including doses and maximums.</p>
+      </li>
+      <li>
+        <h3>It shows you a one-screen outline</h3>
+        <p>
+          The case, objectives, the patient, how the case unfolds, the setup, and anything it couldn't
+          verify.
+        </p>
+      </li>
+      <li>
+        <h3>It waits for you</h3>
+        <p>
+          Reply "Approve", or ask for changes, for example "make the patient an infant" or "add a nurse
+          confederate".
+        </p>
+      </li>
+      <li>
+        <h3>It writes the three documents</h3>
+        <p>
+          It checks them against a quality checklist and sends them to you with a list of items to
+          verify.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="example">
+    <h2 id="example">Example output</h2>
+    <div class="prose">
+      <p>
+        <strong>Not for use in a real simulation.</strong> These files are exactly what the AI produced. They
+        have not been reviewed or edited by a clinician, may contain errors, and should not be used to run
+        an actual simulation. They're here only to show what the skill makes.
+      </p>
+      <p>
+        The request was "Build a simulation on DKA for our second-year PEM fellows." After the outline, the
+        reply was "Approve, but make the patient 12 years old instead."
+      </p>
+      <ul>
+        {examples.map((e) => (
+          <li>
+            {e.title}: <a href={officeViewer(e.file)} target="_blank" rel="noopener">view online</a> or <a href={withBase(e.file)} download>download the Word file</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="tips">
+    <h2 id="tips">Tips</h2>
+    <div class="prose">
+      <ul>
+        <li>
+          Mention your learners, your setting (sim center or in situ), and your country if you're outside
+          the US. Mentioning the UK, for example, switches it to UK guidelines and units.
+        </li>
+        <li>Anything marked <strong>[VERIFY]</strong> is something it couldn't confirm. Check those first.</li>
+        <li>
+          If the assistant can't search the web, every document will say it was drafted without web
+          access.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="important">
+    <h2 id="important">Important</h2>
+    <div class="prose">
+      <p>
+        This is an educational drafting tool, not clinical advice. Every package needs clinician review of
+        the medical content (especially doses, [VERIFY] items, and local protocols) and a pilot run before
+        use with learners. AI-generated content can be wrong in ways that look plausible.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="credits">
+    <h2 id="credits">Credits and license</h2>
+    <div class="prose">
+      <p>
+        Free to use, share, and adapt under the MIT license. The example case included with the skill,
+        Critical Coarc, is used with permission of Erin Munns.
+      </p>
+    </div>
+  </section>
+</Base>

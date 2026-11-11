@@ -6,4 +6,8 @@ import { defineConfig } from 'astro/config';
 // For a custom domain, set `site` to it and add public/CNAME containing the domain.
 export default defineConfig({
   site: 'https://niharikagoparaju.github.io',
+  // Pages that moved. Old links get a page that forwards to the new address.
+  redirects: {
+    '/ai-literacy/review-game': '/ai-toolkit/review-game/',
+  },
 });

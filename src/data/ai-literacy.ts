@@ -1,4 +1,6 @@
-// Content for the AI literacy page (/ai-literacy/).
+// Content for the AI literacy page (/ai-literacy/): Lectures (`lectures`, plus any
+// `presentations`) and, when there are any, Resources (`resources`).
+// Hands-on tools live on the AI Toolkit page instead (src/data/ai-toolkit.ts).
 //
 // To add a presentation:
 //   1. Put the .pptx in public/presentations/ (a filename without spaces is tidiest,
@@ -29,17 +31,18 @@ export interface ResourceGroup {
   items: { title: string; url: string; note?: string }[];
 }
 
-/** Sub-pages listed at the top of the AI literacy page. */
-export const projects: { title: string; href: string; description: string }[] = [
+export interface PageLink {
+  title: string;
+  href: string;
+  description: string;
+}
+
+/** Lecture series and their slides. */
+export const lectures: PageLink[] = [
   {
     title: 'DATA-MD lecture series',
     href: '/ai-literacy/data-md/',
     description: 'A four-session curriculum on AI for medical trainees, from core concepts to clinical documentation.',
-  },
-  {
-    title: 'Build a review game from your lecture',
-    href: '/ai-literacy/review-game/',
-    description: 'Use an AI chatbot to turn a lecture into a Jeopardy-style game, with a free template and a step-by-step guide.',
   },
 ];
 
