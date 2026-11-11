@@ -4,19 +4,154 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PEM Jeopardy</title>
 <style>
-:root{color-scheme:dark;--gold:#ffdc87;--ink:#eef4ff;--muted:#b2c2e3;--line:#304778;--cyan:#71ecff;--pink:#ff9ad0;font:16px system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;min-height:100dvh;color:var(--ink);background:radial-gradient(ellipse at 50% -10%,#203d91,transparent 58%),radial-gradient(ellipse at bottom right,#251244,transparent 55%),#070c21}
-main{max-width:1160px;margin:auto;padding:18px clamp(10px,3vw,38px) 24px}header{text-align:center;margin-bottom:15px}.eyebrow,.tag{letter-spacing:.22em;font-size:.72rem;font-weight:850;text-transform:uppercase;color:var(--gold)}.eyebrow:before,.eyebrow:after{content:"✦";margin:0 .8em}h1{font-size:clamp(1.7rem,5.2vw,3.85rem);font-weight:950;letter-spacing:-.055em;line-height:1;margin:.14em 0 .24em;text-transform:uppercase;background:linear-gradient(180deg,#fff 30%,#a6c3ff 90%);color:transparent;background-clip:text}h2,h3,p{margin:.4em 0 .8em}.muted,small{color:var(--muted)}small{display:block}
-nav,.actions,.scorebar,.team-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}nav{justify-content:center;margin-top:12px}.scorebar{display:grid;grid-template-columns:1fr 1fr;margin-bottom:14px;gap:12px}.podium{position:relative;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:13px;background:linear-gradient(135deg,#162c55,#10152e);padding:8px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}.team0{--accent:var(--cyan)}.team1{--accent:var(--pink)}.team-name{color:var(--accent);font-weight:800;overflow-wrap:anywhere}.score{font-size:clamp(1.2rem,3vw,2.1rem);font-weight:900;font-variant-numeric:tabular-nums}.delta{position:absolute;right:12px;bottom:-12px;background:#103c37;color:#b1ffdc;border-radius:20px;padding:2px 8px;z-index:3;animation:rise .65s both}.loss{background:#41273b;color:#ffd7e7}
-button,input,textarea{font:inherit}button{border:1px solid #526797;border-radius:9px;padding:.55em .85em;background:#15264c;color:var(--ink);font-weight:750;cursor:pointer}button:hover:not(:disabled){border-color:var(--gold);filter:brightness(1.15)}button:disabled{opacity:.45;cursor:default}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}.primary{background:var(--gold);color:#271903;border-color:var(--gold)}.quiet{background:#0e1936}.good{background:#12463c}.bad{background:#472840}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.category{display:grid;grid-template-rows:minmax(52px,auto) repeat(5,1fr);gap:7px;min-width:0}.category h2{margin:0;display:grid;place-items:center;text-align:center;padding:6px;color:#e3ebff;font-size:clamp(.73rem,1.8vw,1.12rem);line-height:1.15;text-transform:uppercase;letter-spacing:.08em;overflow-wrap:anywhere;border:1px solid #334a83;border-radius:8px;background:#101b3b}.tile{min-height:clamp(42px,8vh,75px);background:linear-gradient(155deg,#285bc9,#172a82);border-color:#5474db;box-shadow:inset 0 1px #ffffff36,0 3px #080e27;font-size:clamp(1.1rem,3.2vw,2.3rem);letter-spacing:-.04em;color:var(--gold);padding:0;transition:filter .15s,transform .15s}.tile:hover:not(:disabled){transform:translateY(-2px)}.tile:disabled.used{opacity:1;background:#101a32;color:#a5b3d2;border-color:#283555;font-size:clamp(.65rem,1.6vw,.82rem);box-shadow:none}
-.foot{margin-top:14px;justify-content:space-between}.card,details.rules{border:1px solid var(--line);border-radius:15px;background:#101a37;padding:clamp(12px,3vw,28px);margin:0 auto 14px;max-width:850px}.rules{padding:10px 14px!important}.rules summary{cursor:pointer;font-weight:800}.rules p{margin:.5em 0;font-size:.92rem}.stage{text-align:center;box-shadow:0 16px 60px #03091caa;background:radial-gradient(ellipse at top,#244491,#111b3c 72%);border-top:3px solid var(--gold);padding:clamp(14px,4vw,42px)}.enter{animation:enter .3s ease-out}.stage .actions{justify-content:center;margin-top:15px}.clue{font-size:clamp(1.22rem,4vw,2.55rem);line-height:1.25;font-weight:780;overflow-wrap:anywhere}.answer{border:1px solid #b29453;background:#221d29;color:#ffe2a3;border-radius:10px;padding:12px;font-size:clamp(1rem,2.8vw,1.55rem);white-space:pre-wrap;overflow-wrap:anywhere}.answer .tag{display:block;margin-bottom:5px}.judges,.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.judge{background:#0e1733;border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0}.team-actions{justify-content:center;margin-top:8px}.status{min-height:1.25em;color:var(--gold);margin:8px 0;text-align:center;font-size:.86rem}.error{color:#ffacc2}label{display:block;color:var(--muted);font-weight:680;font-size:.9rem;min-width:0}input,textarea{width:100%;border:1px solid #526797;border-radius:7px;padding:8px;background:#090f27;color:white;margin:4px 0}textarea{resize:vertical;min-height:64px}.editor details{border-top:1px solid var(--line);padding:10px 0}.editor summary{font-weight:800;cursor:pointer}.edit-row{padding:8px 0;border-bottom:1px solid #253654}.victory{border-color:#f5c461;background:radial-gradient(ellipse at 50% 0,#775022,#272043 58%,#101a37);box-shadow:0 0 52px #ffc2532c}.victory h2{font-size:clamp(2rem,6vw,4.5rem);line-height:1.04;color:var(--gold);overflow-wrap:anywhere}.result{padding:9px;border:1px solid var(--line);border-radius:8px;background:#0d1730}.victory .result{animation:enter .35s .15s both}.victory .result + .result{animation-delay:.3s}.victory .actions{animation:enter .3s .45s both}.result strong{display:block;font-size:1.6rem}.pop{animation:pop .45s ease}.source{margin-top:12px;font-size:.76rem;text-align:center;color:var(--muted)}
-@keyframes enter{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:none}}@keyframes pop{45%{transform:scale(1.14);color:var(--gold)}}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media(max-width:510px){.grid,.category{gap:4px}.category h2{letter-spacing:.02em}.podium{padding:6px;flex-wrap:wrap}.judge button{font-size:.82rem}.fields{grid-template-columns:1fr}}
+:root{color-scheme:dark;
+  --bg:#141a26;--surface:#1d2533;--raised:#263042;--line:#2f3a4d;--ink:#f3f5f9;--muted:#9aa6ba;--focus:#8ab8f0;
+  /* Category colors follow the zones of a pediatric resuscitation tape */
+  --z0:#f0645c;--z1:#f2c94c;--z2:#5b9bef;--z3:#4cb86b;--z4:#a77bdb;--z5:#f29a4a;--zf:#f2a7c3;
+  --team0:#7fd1c7;--team1:#f2a7c3;
+  --display:ui-rounded,"SF Pro Rounded","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+  font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+main{max-width:1180px;margin:auto;padding:24px clamp(12px,3vw,40px) 32px}
+h1,h2,h3,p{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+
+/* Masthead: large on the start and customize screens, compact during play */
+.masthead{text-align:center;margin-bottom:28px}
+.masthead .eyebrow,.masthead .edition{color:var(--muted);font-weight:600;font-size:clamp(.85rem,1.6vw,1rem)}
+.masthead h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6.5vw,4.5rem);line-height:1;letter-spacing:-.025em;margin:.12em 0 .14em}
+[data-view="board"] .masthead,[data-view="clue"] .masthead,[data-view="final"] .masthead{display:flex;justify-content:center;align-items:baseline;gap:.6em;margin-bottom:16px}
+[data-view="board"] .masthead .eyebrow,[data-view="clue"] .masthead .eyebrow,[data-view="final"] .masthead .eyebrow{display:none}
+[data-view="board"] .masthead h1,[data-view="clue"] .masthead h1,[data-view="final"] .masthead h1{font-size:1.25rem;letter-spacing:-.01em;margin:0}
+
+/* Buttons */
+button{border:1px solid var(--line);border-radius:10px;padding:.6em 1.05em;background:var(--raised);font-weight:600;cursor:pointer;line-height:1.25}
+button:hover:not(:disabled){border-color:#4a5870;background:#2d384c}
+button:disabled{opacity:.4;cursor:default}
+.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.primary:hover:not(:disabled){background:#fff;border-color:#fff}
+.quiet{background:transparent;border-color:transparent;color:var(--muted)}
+.quiet:hover:not(:disabled){background:var(--surface);border-color:var(--line);color:var(--ink)}
+.good{background:#1f4a35;border-color:#2f7a52;color:#d3f5df}
+.good:hover:not(:disabled){background:#265b41;border-color:#3d9465}
+.bad{background:#4a2328;border-color:#7a3640;color:#fbd6da}
+.bad:hover:not(:disabled){background:#5a2a30;border-color:#94434e}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* Forms */
+label{display:block;min-width:0;color:var(--muted);font-weight:600;font-size:.9rem}
+input,textarea{display:block;width:100%;margin-top:6px;padding:.6em .75em;border:1px solid var(--line);border-radius:8px;background:#10151f;color:var(--ink);font-weight:500;font-size:1rem}
+input:hover,textarea:hover{border-color:#4a5870}
+textarea{resize:vertical;min-height:72px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.error{color:#ff9aa5;font-size:.9rem;min-height:1.35em;margin:8px 0}
+.muted{color:var(--muted)}
+.label{color:var(--muted);font-weight:600;font-size:.85rem}
+
+/* Panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,3vw,28px)}
+
+/* Start screen */
+.setup{display:grid;gap:16px;max-width:760px;margin:0 auto 28px}
+.setup .actions{justify-content:space-between}
+.rules{max-width:760px;margin:0 auto 28px;color:var(--muted)}
+.rules summary{cursor:pointer;font-weight:600;color:var(--ink);width:max-content}
+.rules p{margin-top:8px;max-width:68ch}
+
+/* Scores */
+.scorebar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.podium{position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;min-width:0;padding:12px 18px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.team-name{display:flex;align-items:center;gap:.5em;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.team-name::before{content:"";flex:none;width:.7em;height:.7em;border-radius:50%;background:var(--team)}
+.team0{--team:var(--team0)}.team1{--team:var(--team1)}
+.score{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,3.6vw,2.6rem);font-variant-numeric:tabular-nums;line-height:1}
+.delta{position:absolute;right:14px;top:-11px;padding:1px 9px;border-radius:999px;background:#1f4a35;color:#d3f5df;font-weight:700;font-size:.9rem;font-variant-numeric:tabular-nums}
+.delta.loss{background:#4a2328;color:#fbd6da}
+
+/* Board */
+.grid{display:grid;gap:10px}
+.category{display:grid;gap:10px;min-width:0}
+.category h2{display:flex;align-items:flex-end;justify-content:center;text-align:center;padding:10px 6px 12px;border-top:6px solid var(--c);border-radius:4px 4px 0 0;font-size:clamp(.78rem,1.7vw,1.15rem);font-weight:700;line-height:1.2;overflow-wrap:anywhere;hyphens:auto}
+.tile{min-height:clamp(48px,9vh,88px);padding:0;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-family:var(--display);font-weight:800;font-size:clamp(1.2rem,3.4vw,2.6rem);font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--ink)}
+.tile:hover:not(:disabled){background:color-mix(in srgb,var(--c) 18%,var(--surface));border-color:var(--c)}
+.tile.used{background:transparent;border-style:dashed;border-color:#262f3f;opacity:1}
+[data-view="setup"] .tile:not(.used){opacity:.55}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:16px}
+
+/* Clue screen */
+.stage{--c:var(--zf);text-align:center;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--c);border-radius:16px;padding:clamp(20px,4.5vw,52px) clamp(16px,4vw,48px)}
+.stage-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:.25em 1em;font-weight:700;font-size:clamp(.95rem,1.8vw,1.15rem)}
+.stage-meta .cat{color:var(--c)}
+.stage-meta .pts{color:var(--muted);font-variant-numeric:tabular-nums}
+.clue{max-width:30ch;margin:clamp(14px,2.5vw,24px) auto clamp(20px,3.5vw,36px);font-size:clamp(1.5rem,4.2vw,3.1rem);font-weight:700;line-height:1.22;letter-spacing:-.01em;overflow-wrap:anywhere}
+[tabindex="-1"]:focus{outline:none}
+.answer{max-width:46rem;margin:0 auto;padding:14px 20px;border-radius:12px;background:#10151f;border:1px solid var(--line);text-align:left}
+.answer .label{display:block;margin-bottom:4px}
+.answer p{font-size:clamp(1.1rem,2.6vw,1.75rem);font-weight:700;line-height:1.3;white-space:pre-wrap;overflow-wrap:anywhere}
+.answer small{display:block;margin-top:6px;color:var(--muted);font-size:.85rem}
+.judges{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:46rem;margin:20px auto 0}
+.judge{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px;border-radius:12px;background:#10151f;border:1px solid var(--line);min-width:0}
+.judge .actions{justify-content:center}
+.judge small{color:var(--muted);font-weight:600}
+.stage-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
+.stage .note{color:var(--muted);margin:0 auto 18px;max-width:52ch}
+.wagers{max-width:46rem;margin:0 auto;text-align:left}
+
+/* Results */
+.victory h2{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05;letter-spacing:-.02em;margin:10px 0 26px;overflow-wrap:anywhere}
+.result{display:grid;gap:4px;padding:16px;border-radius:12px;background:#10151f;border:1px solid var(--line);text-align:left}
+.result strong{font-family:var(--display);font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.result small{color:var(--muted)}
+.results{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:46rem;margin:0 auto}
+
+/* Customize screen */
+.editor{max-width:860px;margin:0 auto}
+.editor > h2{font-size:1.5rem;font-weight:700}
+.editor > p.muted{margin:6px 0 18px}
+.editor details > summary{cursor:pointer;font-weight:700}
+.edit-block{border-top:1px solid var(--line);padding:16px 0}
+.edit-block > summary{font-size:1.05rem}
+.edit-block[open] > summary{margin-bottom:12px}
+.edit-block label + label{margin-top:12px}
+.edit-cat{--c:var(--zf);border-top:1px solid var(--line);padding:16px 0 10px}
+.edit-cat__name{color:var(--muted)}
+.edit-cat__name .label{display:flex;align-items:center;gap:.5em}
+.edit-cat__name .label::before{content:"";width:.7em;height:.7em;border-radius:50%;background:var(--c)}
+.edit-cat__name input{margin-top:2px;padding:6px 2px;font-size:1.3rem;font-weight:700;background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0}
+.edit-cat__name input:hover{border-bottom-color:var(--c)}
+.edit-cat details{margin-top:8px}
+.edit-cat summary{width:max-content;font-size:.9rem;color:var(--muted)}
+.edit-cat summary:hover{color:var(--ink)}
+.edit-row{padding:12px 0;border-bottom:1px solid #252e3d}
+.edit-row:last-child{border-bottom:0}
+.edit-row .label{display:block;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.editor-actions{display:flex;gap:8px;margin-top:8px}
+
+.status{min-height:1.5em;margin:14px 0 0;text-align:center;color:var(--muted);font-weight:600;font-size:.95rem}
+.source{margin-top:20px;text-align:center;color:var(--muted);font-size:.8rem}
+
+.enter{animation:enter .28s ease-out}
+.pop{animation:pop .45s ease}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{45%{transform:scale(1.1)}}
+
+@media(max-width:600px){
+  main{padding-top:16px}
+  .grid,.category{gap:5px}
+  .category h2{padding:6px 2px 8px;border-top-width:4px;font-size:.72rem}
+  .tile{border-radius:8px}
+  .podium{padding:10px 12px;flex-wrap:wrap;gap:4px}
+  .fields,.results{grid-template-columns:1fr}
+  .judge{padding:10px}
+  .judge button{padding:.5em .7em;font-size:.9rem}
+  .setup .actions{justify-content:flex-start}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 <main>
-<header id="masthead"></header>
+<header id="masthead" class="masthead"></header>
 <div id="app"></div>
 <div class="source" id="source"></div>
 </main>
@@ -25,7 +160,7 @@ button,input,textarea{font:inherit}button{border:1px solid #526797;border-radius
    GAME CONTENT: START
    This block is the only part that changes between games. You can edit it
    here, or skip code entirely: open this file in a browser, choose
-   Customize Game, paste or edit your clues, then choose Download Game File.
+   Customize game, paste or edit your clues, then choose Download game file.
    The content must stay valid JSON (double quotes, no trailing commas).
 
    categories: each category is ["Category name", clue, clue, ...]
@@ -75,7 +210,7 @@ const GAME = {
    ===================================================================== */
 
 const { values, categories, finale } = GAME;
-// Kept so "Download Game File" can write out a copy of this page with new content.
+// Kept so "Download game file" can write out a copy of this page with new content.
 const SCRIPT_SOURCE = document.currentScript.textContent;
 const STYLE_SOURCE = document.querySelector("style").textContent;
 const app = document.querySelector("#app");
@@ -83,7 +218,7 @@ const esc = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&
 function renderMasthead() {
   document.title = GAME.edition ? `${GAME.title} · ${GAME.edition}` : GAME.title;
   document.querySelector("#masthead").innerHTML =
-    `${GAME.eyebrow ? `<div class="eyebrow">${esc(GAME.eyebrow)}</div>` : ""}<h1>${esc(GAME.title)}</h1>${GAME.edition ? `<div class="tag">${esc(GAME.edition)}</div>` : ""}`;
+    `${GAME.eyebrow ? `<p class="eyebrow">${esc(GAME.eyebrow)}</p>` : ""}<h1>${esc(GAME.title)}</h1>${GAME.edition ? `<p class="edition">${esc(GAME.edition)}</p>` : ""}`;
   document.querySelector("#source").textContent = GAME.source || "";
 }
 renderMasthead();
@@ -137,7 +272,7 @@ function downloadGame() {
   const start = SCRIPT_SOURCE.indexOf("const GAME = ");
   const end = SCRIPT_SOURCE.indexOf("/* =", start);
   const script = SCRIPT_SOURCE.slice(0, start) + "const GAME = " + content + ";\n" + SCRIPT_SOURCE.slice(end);
-  const html = `<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>${esc(document.title)}</title>\n<style>${STYLE_SOURCE}</style>\n<main>\n<header id="masthead"></header>\n<div id="app"></div>\n<div class="source" id="source"></div>\n</main>\n<script>${script}<\/script>\n</html>\n`;
+  const html = `<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>${esc(document.title)}</title>\n<style>${STYLE_SOURCE}</style>\n<main>\n<header id="masthead" class="masthead"></header>\n<div id="app"></div>\n<div class="source" id="source"></div>\n</main>\n<script>${script}<\/script>\n</html>\n`;
   const slug = [GAME.title, GAME.edition].filter(Boolean).join(" ").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "review-game";
   const link = Object.assign(document.createElement("a"), {
     href: URL.createObjectURL(new Blob([html], { type: "text/html" })),
@@ -174,91 +309,103 @@ function reset() {
 }
 reset();
 
+// Each category takes a resuscitation-tape zone color, used on its header, tiles, and clue screen.
+const zone = col => `--c:var(--z${col % 6})`;
 function scoreboard() {
   return `<section class="scorebar" aria-label="Scores">${names.map((name, i) =>
     `<div class="podium team${i}"><span class="team-name">${esc(name)}</span>
       <span class="score" id="score${i}">${scoreText(scores[i])}</span>
       ${effect?.team === i ? `<span class="delta ${effect.delta < 0 ? "loss" : ""}">${signed(effect.delta)}</span>` : ""}</div>`).join("")}</section>`;
 }
-function rules(open = false) {
-  return `<details class="rules" ${open ? "open" : ""}><summary>How to Play</summary>
-    <p>Pick a tile and answer aloud. A correct response earns the tile value. An incorrect response costs that value and gives the other team one chance to steal. The host can pass to close a clue. In Final Jeopardy, wager privately before seeing the clue. Highest final score wins.</p></details>`;
+function rules() {
+  return `<details class="rules"><summary>How to play</summary>
+    <p>Pick a tile and answer aloud. A correct response earns the tile's points. An incorrect response loses them and gives the other team one chance to steal. The host can pass to reveal the answer and close the clue. Before Final Jeopardy, each team privately wagers up to its score. The highest final score wins.</p></details>`;
 }
 function board() {
   const total = categories.length * values.length;
   // Categories share the board's rows (subgrid), so a long category name can't knock tiles out of line.
-  const rows = `minmax(52px,auto) repeat(${values.length},1fr)`;
+  const rows = `minmax(56px,auto) repeat(${values.length},1fr)`;
   return `<div class="grid" style="grid-template-columns:repeat(${categories.length},minmax(0,1fr));grid-template-rows:${rows}">${categories.map(([category, ...clues], col) =>
-    `<section class="category" style="grid-row:span ${values.length + 1};grid-template-rows:${rows};grid-template-rows:subgrid"><h2>${esc(category)}</h2>${clues.map((_, row) => {
+    `<section class="category" style="${zone(col)};grid-row:span ${values.length + 1};grid-template-rows:${rows};grid-template-rows:subgrid"><h2>${esc(category)}</h2>${clues.map((_, row) => {
       const id = col * values.length + row;
-      return `<button type="button" class="tile ${used.has(id) ? "used" : ""}" data-action="tile:${id}" aria-label="${esc(category)}, ${values[row]} points${used.has(id) ? ", played" : ""}" ${used.has(id) || view === "setup" ? "disabled" : ""}>${used.has(id) ? "PLAYED" : values[row]}</button>`;
+      const played = used.has(id);
+      return `<button type="button" class="tile${played ? " used" : ""}" data-action="tile:${id}" aria-label="${esc(category)}, ${values[row]} points${played ? ", played" : ""}" ${played || view === "setup" ? "disabled" : ""}>${played ? "" : values[row]}</button>`;
     }).join("")}</section>`).join("")}</div>
-    ${view === "board" ? `<div class="actions foot"><span class="muted">${used.size} / ${total} played</span>
-      <div class="actions">${button("undo","Undo last score","quiet",!last)}${button("final", used.size === total ? "Final Jeopardy" : "Start Final Early","primary")}</div></div>` : ""}`;
+    ${view === "board" ? `<div class="foot"><span class="muted">${used.size} of ${total} clues played</span>
+      <div class="actions">${button("undo","Undo last score","quiet",!last)}${used.size === total ? button("final","Go to Final Jeopardy","primary") : button("final","Skip to Final Jeopardy")}</div></div>` : ""}`;
 }
 function setup() {
-  return rules(true) + `<section class="card"><div class="fields">
+  return `<section class="panel setup"><div class="fields">
     ${names.map((name,i) => `<label>Team ${i+1} name<input data-name="${i}" maxlength="32" value="${esc(name)}"></label>`).join("")}</div>
-    <div class="actions">${button("start","Start Game","primary")}${button("edit","Customize Game","quiet")}${button("download","Download Game File","quiet")}</div></section>` + board();
+    <div class="actions">${button("start","Start game","primary")}<div class="actions">${button("edit","Customize game","quiet")}${button("download","Download game file","quiet")}</div></div></section>` + rules() + board();
 }
 function editor() {
-  const field = (key, label, value, multiline = false) =>
-    `<label>${label}${multiline ? `<textarea required data-edit="${key}">${esc(value)}</textarea>` : `<input required data-edit="${key}" value="${esc(value)}">`}</label>`;
-  return `<form class="card editor" id="editor" novalidate><h2>Customize Game</h2><p class="muted">Paste clues from an AI, or open a section to edit it by hand. When you're done, save, then choose Download Game File to keep your version.</p>
-    <details ${categories.length ? "" : "open"}><summary>Paste clues from an AI</summary>
+  const field = (key, label, value, multiline = false, required = true) =>
+    `<label>${label}${multiline ? `<textarea ${required ? "required" : ""} data-edit="${key}">${esc(value)}</textarea>` : `<input ${required ? "required" : ""} data-edit="${key}" value="${esc(value)}">`}</label>`;
+  return `<form class="panel editor" id="editor" novalidate><h2>Customize game</h2>
+    <p class="muted">Paste clues from an AI, or edit names and clues by hand. Save when you're done, then download the game file to keep your version.</p>
+    <details class="edit-block"><summary>Paste clues from an AI</summary>
       <label>AI response (JSON)<textarea id="import-text" rows="8" spellcheck="false" placeholder='{ "title": "…", "categories": [ … ], "finale": [ … ] }'></textarea></label>
-      <p class="error" id="import-error" role="alert"></p>${button("import","Load Clues","primary")}</details>
-    <details><summary>Game details</summary>${field("meta:title","Game title",GAME.title)}
-      <label>Line above the title<input data-edit="meta:eyebrow" value="${esc(GAME.eyebrow || "")}"></label>
-      <label>Line below the title<input data-edit="meta:edition" value="${esc(GAME.edition || "")}"></label>
-      <label>Source credit<textarea data-edit="meta:source">${esc(GAME.source || "")}</textarea></label></details>
-    ${categories.map(([title,...clues], col) => `<details><summary>${esc(title)}</summary>${field("title:"+col,"Category title",title)}
-    ${clues.map(([q,a],row) => `<div class="edit-row"><div class="tag">${values[row]} points</div><div class="fields">${field(`q:${col}:${row}`,"Clue",q,true)}${field(`a:${col}:${row}`,"Accepted response",a,true)}</div></div>`).join("")}</details>`).join("")}
-    <details><summary>Final Jeopardy</summary>${field("final:0","Category",finale[0])}${field("final:1","Clue",finale[1],true)}${field("final:2","Accepted response",finale[2],true)}</details>
-    <p class="error" id="edit-error" role="alert"></p><div class="actions">${button("save","Save Clues","primary")}${button("cancel","Cancel","quiet")}</div></form>`;
+      <p class="error" id="import-error" role="alert"></p>${button("import","Load clues","primary")}</details>
+    <details class="edit-block"><summary>Title and source</summary>
+      ${field("meta:title","Game title",GAME.title)}
+      ${field("meta:eyebrow","Line above the title",GAME.eyebrow || "",false,false)}
+      ${field("meta:edition","Line below the title",GAME.edition || "",false,false)}
+      ${field("meta:source","Source credit",GAME.source || "",true,false)}</details>
+    ${categories.map(([title,...clues], col) => `<section class="edit-cat" style="${zone(col)}">
+      <label class="edit-cat__name"><span class="label">Category ${col+1}</span><input required data-edit="title:${col}" value="${esc(title)}"></label>
+      <details><summary>Edit clues</summary>${clues.map(([q,a],row) => `<div class="edit-row"><span class="label">${values[row]} points</span><div class="fields">${field(`q:${col}:${row}`,"Clue",q,true)}${field(`a:${col}:${row}`,"Accepted response",a,true)}</div></div>`).join("")}</details></section>`).join("")}
+    <section class="edit-cat">
+      <label class="edit-cat__name"><span class="label">Final Jeopardy</span><input required data-edit="final:0" value="${esc(finale[0])}"></label>
+      <details><summary>Edit clue</summary><div class="edit-row"><div class="fields">${field("final:1","Clue",finale[1],true)}${field("final:2","Accepted response",finale[2],true)}</div></div></details></section>
+    <p class="error" id="edit-error" role="alert"></p><div class="editor-actions">${button("save","Save clues","primary")}${button("cancel","Cancel","quiet")}</div></form>`;
 }
 function answer(text, source) {
-  return `<div class="answer enter"><span class="tag">Accepted response</span>${esc(text)}</div>${source ? `<small>Lecture question ${esc(source)}</small>` : ""}`;
+  return `<div class="answer enter"><span class="label">Answer</span><p>${esc(text)}</p>${source ? `<small>From lecture question ${esc(source)}</small>` : ""}</div>`;
 }
 function judges(isFinal = false) {
   return `<div class="judges">${names.map((name,i) => {
     const locked = isFinal ? rulings[i] !== null : tried[i];
-    return `<div class="judge team${i}"><span class="team-name">${esc(name)}</span><div class="team-actions">
-      ${locked ? `<small>${isFinal ? (rulings[i] ? "Correct" : "Incorrect") : "Attempt used"}</small>` :
-      button((isFinal ? "judge" : "score") + ":" + i + ":1","Correct","good") + button((isFinal ? "judge" : "score") + ":" + i + ":0","Incorrect","bad")}</div></div>`;
+    const act = (isFinal ? "judge" : "score") + ":" + i;
+    return `<div class="judge team${i}"><span class="team-name">${esc(name)}</span>
+      ${locked ? `<small>${isFinal ? (rulings[i] ? "Marked correct" : "Marked incorrect") : "Already answered"}</small>` :
+      `<div class="actions">${button(act + ":1","Correct","good")}${button(act + ":0","Incorrect","bad")}</div>`}</div>`;
   }).join("")}</div>`;
 }
 function clue() {
   const col = Math.floor(active / values.length);
   const row = active % values.length;
   const [q,a,source] = categories[col][row+1];
-  return `<section class="card stage ${!shown && !tried.some(Boolean) ? "enter" : ""}">
-    <div class="tag">${esc(categories[col][0])} · ${values[row]} points</div>
+  return `<section class="stage ${!shown && !tried.some(Boolean) ? "enter" : ""}" style="${zone(col)}">
+    <p class="stage-meta"><span class="cat">${esc(categories[col][0])}</span><span class="pts">${values[row]} points</span></p>
     <h2 class="clue" tabindex="-1">${esc(q)}</h2>
-    ${shown ? answer(a,source) : button("reveal","Reveal Answer","quiet")}
-    ${resolved ? "" : judges()}<div class="actions">${resolved ? button("continue","Back to Board","primary") : button("pass","Pass &amp; Reveal","quiet")}${button("undo","Undo last score","quiet",!last)}</div></section>`;
+    ${shown ? answer(a,source) : button("reveal","Reveal answer","primary")}
+    ${resolved ? "" : judges()}
+    <div class="stage-controls">${resolved ? button("continue","Back to board","primary") : button("pass","Pass and reveal","quiet")}${button("undo","Undo last score","quiet",!last)}</div></section>`;
 }
 function final() {
   const [category,q,a,source] = finale;
-  if (finalStep === 0) return `<section class="card stage enter"><div class="tag">Final Jeopardy · Wagers</div>
-    <h2 class="clue" tabindex="-1">${esc(category)}</h2><p class="muted">Teams tell the host their wagers privately. Wagers stay masked until the results.</p>
-    <form id="wager-form"><div class="fields">${names.map((name,i) => `<label>${esc(name)} · 0 to ${format(Math.max(0,scores[i]))}
+  if (finalStep === 0) return `<section class="stage enter"><p class="stage-meta"><span class="cat">Final Jeopardy</span><span class="pts">Wagers</span></p>
+    <h2 class="clue" tabindex="-1">${esc(category)}</h2>
+    <p class="note">Each team tells the host its wager privately. Wagers stay hidden until the results.</p>
+    <form id="wager-form" class="wagers"><div class="fields">${names.map((name,i) => `<label>${esc(name)} wager, up to ${format(Math.max(0,scores[i]))}
       <input type="password" inputmode="numeric" id="wager${i}" aria-label="${esc(name)} wager" autocomplete="off" ${scores[i] <= 0 ? 'value="0" readonly' : ""}></label>`).join("")}</div>
-      <p class="error" role="alert" id="wager-error"></p><div class="actions"><button class="primary">Lock Wagers &amp; Reveal Clue</button>${button("back","Back to Board","quiet")}</div></form></section>`;
-  if (finalStep < 3) return `<section class="card stage enter"><div class="tag">Final Jeopardy · ${esc(category)}</div>
-    <h2 class="clue" tabindex="-1">${esc(q)}</h2>${finalStep === 1 ? `<p class="muted">Teams write their responses privately.</p>${button("final-reveal","Reveal Answer","primary")}` :
-    answer(a,source) + judges(true) + `<div class="actions">${button("settle","Reveal Final Scores","primary",rulings.includes(null))}${button("clear-rulings","Clear rulings","quiet",rulings.every(x => x === null))}</div>`}</section>`;
+      <p class="error" role="alert" id="wager-error"></p><div class="stage-controls"><button class="primary">Lock wagers and show clue</button>${button("back","Back to board","quiet")}</div></form></section>`;
+  if (finalStep < 3) return `<section class="stage enter"><p class="stage-meta"><span class="cat">Final Jeopardy</span><span class="pts">${esc(category)}</span></p>
+    <h2 class="clue" tabindex="-1">${esc(q)}</h2>${finalStep === 1 ? `<p class="note">Teams write their responses privately.</p><div class="stage-controls">${button("final-reveal","Reveal answer","primary")}</div>` :
+    answer(a,source) + judges(true) + `<div class="stage-controls">${button("settle","Show final scores","primary",rulings.includes(null))}${button("clear-rulings","Clear rulings","quiet",rulings.every(x => x === null))}</div>`}</section>`;
   const tie = scores[0] === scores[1];
   const winner = scores[0] > scores[1] ? 0 : 1;
-  return `<section class="card stage victory enter"><div class="tag">✦ Final Results ✦</div>
+  return `<section class="stage victory enter"><p class="stage-meta"><span class="cat">Final results</span></p>
     <h2 tabindex="-1">${tie ? "It’s a tie!" : esc(names[winner]) + " wins!"}</h2>
-    <div class="fields">${names.map((name,i) => `<div class="result team${i}"><span class="team-name">${esc(name)}</span>
-      <strong>${scoreText(scores[i])}</strong><small>Wager ${format(wagers[i])} · ${rulings[i] ? "Correct" : "Incorrect"} · ${signed(rulings[i] ? wagers[i] : -wagers[i])}</small></div>`).join("")}</div>
-    <div class="actions">${button("again","Play Again","primary")}</div></section>`;
+    <div class="results">${names.map((name,i) => `<div class="result team${i}"><span class="team-name">${esc(name)}</span>
+      <strong>${scoreText(scores[i])}</strong><small>Wagered ${format(wagers[i])}, ${rulings[i] ? "correct" : "incorrect"} (${signed(rulings[i] ? wagers[i] : -wagers[i])})</small></div>`).join("")}</div>
+    <div class="stage-controls">${button("again","Play again","primary")}</div></section>`;
 }
 function render(focus = "", animateFinal = false) {
+  document.body.dataset.view = view;
   app.innerHTML = (view === "setup" || view === "edit" ? "" : scoreboard()) +
-    (view === "setup" ? setup() : view === "edit" ? editor() : view === "board" ? rules() + board() : view === "clue" ? clue() : final()) +
+    (view === "setup" ? setup() : view === "edit" ? editor() : view === "board" ? board() : view === "clue" ? clue() : final()) +
     `<div class="status" role="status">${esc(message)}</div>`;
   if (focus) {
     const target = focus.split(", ").map(selector => app.querySelector(selector)).find(Boolean);
@@ -290,7 +437,8 @@ function saveEdits() {
   const fields = [...app.querySelectorAll("[data-edit]")];
   const blank = fields.find(field => field.required && !field.value.trim());
   if (blank) {
-    blank.closest("details").open = true;
+    const section = blank.closest("details");
+    if (section) section.open = true;
     document.querySelector("#edit-error").textContent = "Fill in each category, clue, and accepted response before saving.";
     blank.focus();
     return;
@@ -312,7 +460,7 @@ function saveEdits() {
   }
   renderMasthead();
   view = "setup";
-  message = "Clues saved. Choose Download Game File to keep this version.";
+  message = "Clues saved. To keep this version, choose Download game file.";
   render('[data-action="download"]');
 }
 function closeClue() {
@@ -327,7 +475,7 @@ function score(team, correct) {
   scores[team] += delta;
   effect = {team,delta};
   tried[team] = true;
-  message = names[team] + " " + signed(delta) + (correct || tried.every(Boolean) ? " · Clue closed" : " · Other team can steal");
+  message = names[team] + " " + signed(delta) + (correct || tried.every(Boolean) ? ". Clue closed." : ". The other team can steal.");
   resolved = correct || tried.every(Boolean);
   if (resolved) shown = true;
   render(resolved ? '[data-action="continue"]' : '[data-action="score:'+(1-team)+':1"]');
@@ -355,7 +503,7 @@ app.addEventListener("click", event => {
       }
       reset();
       view = "edit";
-      message = `Loaded ${categories.length} categories. Check the clues below, then choose Save Clues.`;
+      message = `Loaded ${categories.length} categories. Check the clues below, then choose Save clues.`;
       render('[data-action="save"]');
       return;
     }
